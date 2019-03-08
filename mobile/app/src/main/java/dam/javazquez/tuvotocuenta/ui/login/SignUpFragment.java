@@ -106,12 +106,9 @@ public class SignUpFragment extends Fragment {
                 R.array.provincias,
                 android.R.layout.simple_spinner_item
         );
-        btn_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SignUpFragment.this.doSignUp();
-            }
-        });
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ciudades.setAdapter(adapter);
+        btn_signup.setOnClickListener(v -> doSignUp());
 
 
     }
