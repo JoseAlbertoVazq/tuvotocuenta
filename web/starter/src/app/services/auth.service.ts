@@ -7,11 +7,7 @@ import { LoginResponse } from '../interfaces/login-response';
 
 const authUrl = `${environment.apiUrl}`;
 
-const requestOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +15,20 @@ const requestOptions = {
 export class AuthService {
 
   constructor(private http: HttpClient) { }
+  request(email: String, password: String) {
+    let emailPass: String;
+    emailPass = btoa(email + ':' + password);
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${emailPass}`
+      })
+    };
 
+    return requestOptions;
+  }
   login(loginDto: LoginDto): Observable<LoginResponse> {
+    const requestOptions = this.request(loginDto.email, loginDto.password);
     return this.http.post<LoginResponse>(`${authUrl}/auth`, loginDto, requestOptions);
   }
 
