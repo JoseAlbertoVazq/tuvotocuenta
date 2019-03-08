@@ -21,7 +21,8 @@ export class AuthService {
     const requestOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${emailPass}`
+        'Authorization': `Basic ${emailPass}`,
+        'Access-Control-Allow-Origin': '*'
       })
     };
 
@@ -29,7 +30,7 @@ export class AuthService {
   }
   login(loginDto: LoginDto): Observable<LoginResponse> {
     const requestOptions = this.request(loginDto.email, loginDto.password);
-    return this.http.post<LoginResponse>(`${authUrl}/auth`, loginDto, requestOptions);
+    return this.http.post<LoginResponse>(`${authUrl}/auth`, environment.masterKey, requestOptions);
   }
 
   setLoginData(loginResponse: LoginResponse) {
@@ -37,6 +38,8 @@ export class AuthService {
     localStorage.setItem('username', loginResponse.username);
     localStorage.setItem('email', loginResponse.email);
     localStorage.setItem('rol', loginResponse.rol);
+    localStorage.setItem('city', loginResponse.city);
   }
 
+  
 }

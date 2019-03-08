@@ -21,13 +21,13 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    const loginDto = new LoginDto(this.form.controls['email'].value, this.form.controls['password'].value);
+    const loginDto: LoginDto = this.form.value
     this.authService.login(loginDto).subscribe(loginResp => {
       console.log(loginResp);
       this.authService.setLoginData(loginResp);
       this.router.navigate(['/dashboard']);
     }, error => {
-      console.log('Error en petición de login');
+      console.log(error);
       this.router.navigate(['/error']);
     }
     );

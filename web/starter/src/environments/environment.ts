@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://ancient-fjord-80812.herokuapp.com',
+  masterKey: '{"access_token":"MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK"}'
 };
 
 /*
