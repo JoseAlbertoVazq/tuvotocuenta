@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -100,6 +101,11 @@ public class SignUpFragment extends Fragment {
         nombre = view.findViewById(R.id.name_signup);
         btn_signup = view.findViewById(R.id.btn_do_signup);
         ciudades = view.findViewById(R.id.ciudades_signup);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.provincias,
+                android.R.layout.simple_spinner_item
+        );
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +128,7 @@ public class SignUpFragment extends Fragment {
         String email_txt = email.getText().toString();
         String password_txt = password.getText().toString();
         String nombre_txt = nombre.getText().toString();
+        String ciudad_txt = ciudades.getSelectedItem().toString();
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 
         if (email_txt.equals("") || password_txt.equals("")) {
@@ -133,7 +140,7 @@ public class SignUpFragment extends Fragment {
         } else {
 
 
-            UserResponse register = new UserResponse(nombre_txt, email_txt, password_txt);
+            UserResponse register = new UserResponse(nombre_txt, email_txt, password_txt, ciudad_txt);
             LoginService service = ServiceGenerator.createService(LoginService.class);
             Call<LoginResponse> loginReponseCall = service.doSignUp(register);
 
