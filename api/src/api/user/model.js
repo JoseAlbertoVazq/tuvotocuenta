@@ -25,6 +25,11 @@ const userSchema = new Schema({
     index: true,
     trim: true
   },
+  city: {
+    type: String,
+    index: true,
+    trim: true
+  },
   role: {
     type: String,
     enum: roles,
