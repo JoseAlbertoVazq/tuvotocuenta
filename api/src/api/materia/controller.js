@@ -3,7 +3,7 @@ import { Materia } from '.'
 
 export const create = ({ bodymen: { body } }, res, next) =>
   Materia.create(body)
-    .then((materia) => materia.view(true))
+    .then((materia) => materia.view())
     .then(success(res, 201))
     .catch(next)
 
@@ -21,7 +21,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 export const show = ({ params }, res, next) =>
   Materia.findById(params.id)
     .then(notFound(res))
-    .then((materia) => materia ? materia.view() : null)
+    .then((materia) => materia ? materia.view(true) : null)
     .then(success(res))
     .catch(next)
 

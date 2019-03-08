@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { token } from '../../services/passport'
+import { token, master } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
 export Materia, { schema } from './model'
@@ -39,7 +39,7 @@ router.post('/',
  * @apiError 401 user access only.
  */
 router.get('/',
-  token({ required: true }),
+  master(),
   query(),
   index)
 

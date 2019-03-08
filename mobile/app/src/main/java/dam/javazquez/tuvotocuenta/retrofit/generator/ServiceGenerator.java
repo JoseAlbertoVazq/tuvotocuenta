@@ -19,7 +19,6 @@ public class ServiceGenerator {
     // Solución temporal
     public static String jwtToken = null;
 
-
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(BASE_URL)
