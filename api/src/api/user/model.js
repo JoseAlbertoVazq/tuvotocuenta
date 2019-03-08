@@ -38,7 +38,15 @@ const userSchema = new Schema({
   picture: {
     type: String,
     trim: true
-  }
+  },
+  partido: {
+    type: Schema.Types.ObjectId,
+    ref: 'Partido'
+  },
+  favs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Propuesta'
+  }]
 }, {
   timestamps: true
 })
