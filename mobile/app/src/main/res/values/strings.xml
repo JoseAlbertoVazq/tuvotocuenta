@@ -13,7 +13,7 @@
     <string name="userId">userId</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Full Name</string>
     <string name="tvGoSignUp">Don\'t have an account?</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -17,6 +17,13 @@ public class UserResponse {
 
     public UserResponse(){}
 
+    public UserResponse(String name, String email, String password, String city) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+    }
+
     public UserResponse(String _id, String name, String email, String password, String city, String role, String picture, PartidoResponse partido, List<PropuestaResponse> propuestas) {
         this._id = _id;
         this.name = name;
