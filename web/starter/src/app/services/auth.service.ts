@@ -41,5 +41,11 @@ export class AuthService {
     localStorage.setItem('city', loginResponse.city);
   }
 
-  
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+  isAdmin() {
+    return localStorage.getItem('role') === 'admin';
+  }
+
 }
