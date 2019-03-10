@@ -98,7 +98,6 @@ userSchema.statics = {
   roles
 }
 
-
 userSchema.plugin(mongooseKeywords, { paths: ['email', 'name'] })
 
 const model = mongoose.model('User', userSchema)
