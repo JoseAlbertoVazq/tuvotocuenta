@@ -84,6 +84,7 @@ userSchema.methods = {
       fields = [...fields, 'email', 'ciudad', 'createdAt']
     }
 
+    
     fields.forEach((field) => { view[field] = this[field] })
 
     return view
