@@ -7,7 +7,7 @@ import { schema } from './model'
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, role } = schema.tree
+const { email, password, name, picture, ciudad, role } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -116,5 +116,6 @@ router.put('/:id/password',
 router.delete('/:id',
   token({ required: true, roles: ['admin'] }),
   destroy)
+
 
 export default router
