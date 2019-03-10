@@ -21,6 +21,8 @@ export class UsuariosComponent implements OnInit {
     public dialog: MatDialog, private userService: UsuarioService, private titleService: Title) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
+    this.getAll();
+    this.titleService.setTitle('Users');
   }
 
   getAll() {
