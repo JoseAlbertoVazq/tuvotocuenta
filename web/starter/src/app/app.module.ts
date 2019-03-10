@@ -15,7 +15,13 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { AgmCoreModule } from '@agm/core';
+import {MatInputModule} from '@angular/material/input';
 
+import {MatTableModule} from '@angular/material/table';
+
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {
   MatSidenavModule,
   MatCardModule,
@@ -92,10 +98,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
+    MatInputModule,
+    MatChipsModule,
     MatToolbarModule,
     MatTabsModule,
     MatListModule,
+    MatSnackBarModule,
     MatSlideToggleModule,
+    MatTableModule,
+    MatDialogModule,
     MatSelectModule,
     MatProgressBarModule,
     FlexLayoutModule,
@@ -107,7 +118,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    },
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
   ],
   bootstrap: [AppComponent]
 })
