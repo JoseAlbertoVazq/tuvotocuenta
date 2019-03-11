@@ -1,4 +1,4 @@
-export interface PropuestaResponse {
+export interface Propuesta {
     id: string;
     titulo: string;
     contenido: string;
