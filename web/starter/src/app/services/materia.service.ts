@@ -19,8 +19,8 @@ export class MateriaService {
     return this.http.get<MateriaContainer>(`${materiaUrl}${this.master}`);
   }
 
-  createMateria(categoryCreateDto: MateriaCreateDto): Observable<Materia> {
-    return this.http.post<Materia>(`${materiaUrl}${this.token}`,categoryCreateDto);
+  createMateria(materiaCreateDto: MateriaCreateDto): Observable<Materia> {
+    return this.http.post<Materia>(`${materiaUrl}${this.token}`,materiaCreateDto);
   }
 
   updateMateria(id: string, resource: MateriaCreateDto): Observable<Materia> {

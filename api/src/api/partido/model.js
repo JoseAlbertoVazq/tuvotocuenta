@@ -9,7 +9,8 @@ const partidoSchema = new Schema({
   },
   propuestas: [{
     type: Schema.Types.ObjectId,
-    ref: 'Propuesta'
+    ref: 'Propuesta',
+    default: null
   }]
 }, {
   timestamps: true,
