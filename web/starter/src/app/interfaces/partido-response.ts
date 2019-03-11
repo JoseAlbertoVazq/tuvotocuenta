@@ -1,4 +1,4 @@
-export interface PartidoResponse {
+export interface Partido {
     id: string;
     nombre: string;
     siglas: string;
