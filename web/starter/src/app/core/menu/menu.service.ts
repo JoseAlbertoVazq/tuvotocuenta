@@ -32,6 +32,12 @@ const MENUITEMS = [
     name: 'DOCS',
     type: 'extTabLink',
     icon: 'local_library'
+  },
+  {
+    state: '/dashboard/materias',
+    name: 'Materias',
+    type: 'link',
+    icon: 'swap_horiz'
   }
 ];
 

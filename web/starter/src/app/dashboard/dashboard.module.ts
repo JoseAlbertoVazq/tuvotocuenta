@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MateriasComponent } from './materias/materias/materias.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [ DashboardComponent, UsuariosComponent ]
+  declarations: [ DashboardComponent, UsuariosComponent, MateriasComponent ]
 })
 
 export class DashboardModule {}
