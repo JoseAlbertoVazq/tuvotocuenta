@@ -17,7 +17,7 @@ import {DialogDeletePartidoComponent} from 'src/app/dialogs/partidos/dialog-dele
   styleUrls: ['./partidos.component.scss']
 })
 export class PartidosComponent implements OnInit {
-  displayedColumns: string[] = ['siglas','name', 'actions'];
+  displayedColumns: string[] = ['siglas', 'name', 'actions'];
   dataSource;
   partidosList: Partido[];
   partidos: PartidoContainer;

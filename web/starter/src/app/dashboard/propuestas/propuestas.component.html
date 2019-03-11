@@ -1,3 +1,65 @@
-<p>
-  propuestas works!
-</p>
+<div fxLayout="column" id="container">
+  <div fxGap="100px">
+    <h4 fxFlex="100px" id="titleTable">Propuestas</h4>
+    <mat-form-field fxFlex="300px" fxFlex.lt-md="150px">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar propuesta">
+    </mat-form-field>
+  </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 white w-100" >
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef>Título</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.titulo}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="partido">
+        <th mat-header-cell *matHeaderCellDef>Partido</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.partido.siglas}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="materia">
+        <th mat-header-cell *matHeaderCellDef>Materia</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.materia.nombre}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+            <!--Mobile actions -->
+            <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.gt-sm>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialogEditPropuesta(element)">
+                <mat-icon>border_color</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="openDialogDeletePropuesta(element)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+            <!-- Mobile actions -->
+  
+            <!-- Actions in normal size-->
+            <button mat-icon-button fxHide.lt-md (click)="openDialogEditPropuesta(element)">
+              <mat-icon>border_color</mat-icon>
+            </button>
+            <button mat-icon-button  fxHide.lt-md (click)="openDialogDeletePropuesta(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!-- Actions in normal size-->
+          </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons ></mat-paginator>
+</div>
+<button mat-fab id="addFloatingButton" (click)="openDialogNewPropuesta()">
+  <mat-icon>add</mat-icon>
+</button>

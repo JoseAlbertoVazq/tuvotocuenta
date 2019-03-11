@@ -142,14 +142,17 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
   ],
   bootstrap: [AppComponent],
-  entryComponents:[
+  entryComponents: [
     DialogDeleteUsuarioComponent,
     DialogNewMateriaComponent,
     DialogEditMateriaComponent,
     DialogDeleteMateriaComponent,
     DialogNewPartidoComponent,
     DialogEditPartidoComponent,
-    DialogDeletePartidoComponent
+    DialogDeletePartidoComponent,
+    DialogNewPropuestaComponent,
+    DialogEditPropuestaComponent,
+    DialogDeletePropuestaComponent
   ]
 })
 export class AppModule { }

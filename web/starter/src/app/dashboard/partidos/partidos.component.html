@@ -2,7 +2,7 @@
   <div fxGap="100px">
     <h4 fxFlex="100px" id="titleTable">Partidos</h4>
     <mat-form-field fxFlex="300px" fxFlex.lt-md="150px">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar materia">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar partido">
     </mat-form-field>
   </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 white w-100" >
