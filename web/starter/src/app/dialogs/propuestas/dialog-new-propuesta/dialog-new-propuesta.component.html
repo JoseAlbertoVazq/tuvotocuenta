@@ -11,7 +11,7 @@
     <mat-form-field>
       <mat-select placeholder="Partido" [formControl]="form.controls['partido']" [(value)]="partidoSelected" name = "partido">
     <mat-option *ngFor="let partido of allPartidos" [value]="partido.id">
-      {{partido.nombre}}
+      {{partido.siglas}}
     </mat-option>
     </mat-select>
     </mat-form-field>
