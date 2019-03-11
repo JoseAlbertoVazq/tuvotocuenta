@@ -11,6 +11,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MateriasComponent } from './materias/materias/materias.component';
 import { PartidosComponent } from './partidos/partidos.component';
+import { PropuestasComponent } from './propuestas/propuestas.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { PartidosComponent } from './partidos/partidos.component';
     ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [ DashboardComponent, UsuariosComponent, MateriasComponent, PartidosComponent ]
+  declarations: [ DashboardComponent, UsuariosComponent, MateriasComponent, PartidosComponent, PropuestasComponent ]
 })
 
 export class DashboardModule {}
