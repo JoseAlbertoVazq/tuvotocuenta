@@ -23,21 +23,26 @@ export interface Menu {
 const MENUITEMS = [
   {
     state: '/',
-    name: 'HOME',
+    name: 'Login',
     type: 'link',
     icon: 'explore'
   },
   {
-    state: 'http://primer.nyasha.me/docs',
-    name: 'DOCS',
-    type: 'extTabLink',
-    icon: 'local_library'
+    state: '/dashboard',
+    name: 'Usuarios',
+    type: 'link',
+    icon: 'assignment_ind'
   },
   {
     state: '/dashboard/materias',
     name: 'Materias',
     type: 'link',
     icon: 'swap_horiz'
+  }, {
+    state: '/dashboard/partidos',
+    name: 'Partidos',
+    type: 'link',
+    icon: 'swap_horizontal_circle'
   }
 ];
 
