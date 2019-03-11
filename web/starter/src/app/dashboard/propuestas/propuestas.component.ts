@@ -55,7 +55,7 @@ export class PropuestasComponent implements OnInit {
   }
   openDialogEditPropuesta(element: Propuesta) {
     const dialogoEditPropuesta = this.dialog.open(DialogEditPropuestaComponent, {
-      data: { Propuesta: element }
+      data: { propuesta: element }
     });
 
     dialogoEditPropuesta.afterClosed().subscribe(result => {
