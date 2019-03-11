@@ -1,3 +1,7 @@
-<p>
-  dialog-edit-materia works!
-</p>
+<div fxLayout="column" fFlexFill>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="{{data.materia.nombre}}" [formControl]="form.controls['nombre']" required>
+    
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="editMateria()">EDIT</button>
+</div>

@@ -27,7 +27,7 @@ export class MateriaService {
     return this.http.put<Materia>(`${materiaUrl}/${id}${this.token}`, resource);
   }
 
-  deleteMateria(id: number): Observable<Materia> {
+  deleteMateria(id: string): Observable<Materia> {
     return this.http.delete<Materia>(`${materiaUrl}/${id}${this.token}`);
   }
 

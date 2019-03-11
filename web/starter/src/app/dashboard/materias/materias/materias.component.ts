@@ -9,6 +9,7 @@ import {MateriaService} from '../../../services/materia.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogNewMateriaComponent } from 'src/app/dialogs/materias/dialog-new-materia/dialog-new-materia.component';
 import { DialogDeleteMateriaComponent } from 'src/app/dialogs/materias/dialog-delete-materia/dialog-delete-materia.component';
+import { DialogEditMateriaComponent } from 'src/app/dialogs/materias/dialog-edit-materia/dialog-edit-materia.component';
 
 @Component({
   selector: 'app-materias',
@@ -51,6 +52,17 @@ export class MateriasComponent implements OnInit {
     });
 
   }
+
+  openDialogEditMateria(element: Materia) {
+    const dialogoEditMateria = this.dialog.open(DialogEditMateriaComponent, {
+      data: { materia: element }
+    });
+
+    dialogoEditMateria.afterClosed().subscribe(result => {
+      this.getListMaterias('Materia edited');
+    });
+  }
+
   openDialogDeleteMateria(element: Materia) {
     const dialogoDeleteMateria = this.dialog.open(DialogDeleteMateriaComponent, {
       data: { id: element.id }
