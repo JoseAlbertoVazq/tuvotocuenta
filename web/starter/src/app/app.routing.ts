@@ -10,7 +10,7 @@ export const AppRoutes: Routes = [
     component: AdminLayoutComponent,
     children: [{
       path: 'dashboard',
-      loadChildren: './dashboard/dashboard.module#DashboardModule'
+      loadChildren: './dashboard/dashboard.module#DashboardModule',
     }]
   }, {
     path: '',
@@ -19,7 +19,4 @@ export const AppRoutes: Routes = [
       path: 'session',
       loadChildren: './session/session.module#SessionModule'
     }]
-  }, {
-    path: '**',
-    redirectTo: 'session/404'
   }];
