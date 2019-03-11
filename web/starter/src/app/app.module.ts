@@ -140,7 +140,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DialogDeleteUsuarioComponent,
     DialogNewMateriaComponent,
     DialogEditMateriaComponent,
-    DialogDeleteMateriaComponent
+    DialogDeleteMateriaComponent,
+    DialogNewPartidoComponent,
+    DialogEditPartidoComponent,
+    DialogDeletePartidoComponent
   ]
 })
 export class AppModule { }
