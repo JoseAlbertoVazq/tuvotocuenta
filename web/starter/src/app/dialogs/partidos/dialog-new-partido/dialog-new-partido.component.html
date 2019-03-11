@@ -1,3 +1,13 @@
-<p>
-  dialog-new-partido works!
-</p>
+<div fxLayout="column" fFlexFill>
+  <form [formGroup]="form" (ngSubmit)="addPartido()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Nombre" [formControl]="form.controls['nombre']" required>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="siglas" [formControl]="form.controls['siglas']" required>
+    </mat-form-field>
+    <br />
+    <button mat-raised-button color="primary" [disabled]="!form.valid">ADD</button>
+  </form>
+</div>

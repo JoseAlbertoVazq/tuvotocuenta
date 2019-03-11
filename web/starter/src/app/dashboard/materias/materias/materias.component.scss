@@ -24,13 +24,10 @@ table {
 #addFloatingButton {
     position: fixed;
     right: 5%;
-    bottom: 5%;
+    bottom: 15%;
     z-index: 9999999;
-    background-color: var(--color-primary-dark);
+   
 
-    .mat-icon {
-        color: white;
-    }
 }
 .w-100{
     width: 100%;

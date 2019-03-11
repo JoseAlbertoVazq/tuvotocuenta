@@ -47,4 +47,31 @@ export class PartidosComponent implements OnInit {
       .catch(() => this.snackBar.open('Hubo un error mientras cargábamos los partidos', 'Close', { duration: 3000 }));
   }
 
+  openDialogNewPartido() {
+    const dialogoNuevoPartido = this.dialog.open(DialogNewPartidoComponent);
+
+    dialogoNuevoPartido.afterClosed().subscribe(result => {
+      this.getListPartidos('Partido creado');
+    });
+
+  }
+  openDialogEditPartido(element: Partido) {
+    const dialogoEditPartido = this.dialog.open(DialogEditPartidoComponent, {
+      data: { partido: element }
+    });
+
+    dialogoEditPartido.afterClosed().subscribe(result => {
+      this.getListPartidos('Partido editado');
+    });
+  }
+
+  openDialogDeletePartido(element: Partido) {
+    const dialogoDeletePartido = this.dialog.open(DialogDeletePartidoComponent, {
+      data: { id: element.id }
+    });
+
+    dialogoDeletePartido.afterClosed().subscribe(result => {
+      this.getListPartidos('Partido eliminado');
+    });
+  }
 }

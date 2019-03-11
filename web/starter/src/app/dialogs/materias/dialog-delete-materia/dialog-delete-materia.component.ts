@@ -25,6 +25,6 @@ export class DialogDeleteMateriaComponent implements OnInit {
   delete() {
     this.materiaService.deleteMateria(this.data.id).subscribe(resp => {
       this.dialogRef.close('confirm');
-    }, error => this.snackBar.open('Hubo un error al intentar borrar esta categoría', 'Close', {duration: 3000}));
+    }, error => this.snackBar.open('Hubo un error al intentar borrar esta materia', 'Close', {duration: 3000}));
   }
 }
