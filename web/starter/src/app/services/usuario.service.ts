@@ -60,7 +60,7 @@ export class UsuarioService {
     return this.http.put<UsuarioResponse>(`${usuarioUrl}/${usuario._id}`, usuario, requestOptions);
   }
 
-  deleteUsuario(id: number): Observable<UsuarioResponse> {
+  deleteUsuario(id: String): Observable<UsuarioResponse> {
     const requestOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

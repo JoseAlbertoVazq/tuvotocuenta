@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UsuariosResponse } from 'src/app/interfaces/usuarios-response';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { UsuarioResponse } from '../../interfaces/usuario-response';
+import { DialogDeleteUsuarioComponent } from 'src/app/dialogs/usuarios/dialog-delete-usuario/dialog-delete-usuario.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -40,12 +41,12 @@ export class UsuariosComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  // openDialogDeleteUser(u: UserResponse) {
-  //   const dialogDeleteUser = this.dialog.open(DialogDeleteUserComponent, { data: { user: u } });
-  //   dialogDeleteUser.afterClosed().subscribe(result => {
-  //     this.getAll();
-  //   });
-  // }
+  openDialogDeleteUser(u: UsuarioResponse) {
+    const dialogDeleteUser = this.dialog.open(DialogDeleteUsuarioComponent, { data: { user: u } });
+    dialogDeleteUser.afterClosed().subscribe(result => {
+      this.getAll();
+    });
+  }
   // //dialog to create users
   // openDialogNewUser() {
   //   const dialogNewUser = this.dialog.open(DialogCreateUserComponent, { width: '500px' });
