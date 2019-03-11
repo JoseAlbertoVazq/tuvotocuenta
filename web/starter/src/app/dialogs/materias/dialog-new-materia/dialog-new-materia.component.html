@@ -1,0 +1,9 @@
+<div fxLayout="column" fFlexFill>
+  <form [formGroup]="form" (ngSubmit)="addMateria()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Nombre" [formControl]="form.controls['nombre']" required>
+    </mat-form-field>
+    <br />
+    <button mat-raised-button color="primary" [disabled]="!form.valid">ADD</button>
+  </form>
+</div>

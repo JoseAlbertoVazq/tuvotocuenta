@@ -1,7 +1,7 @@
 export class MateriaCreateDto {
-    name: String;
+    nombre: String;
 
     constructor(name: String) {
-        this.name = name;
+        this.nombre = name;
     }
 }

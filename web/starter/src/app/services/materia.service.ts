@@ -20,7 +20,7 @@ export class MateriaService {
   }
 
   createMateria(categoryCreateDto: MateriaCreateDto): Observable<Materia> {
-    return this.http.post<Materia>(`${materiaUrl}${this.token}`, MateriaCreateDto);
+    return this.http.post<Materia>(`${materiaUrl}${this.token}`,categoryCreateDto);
   }
 
   updateMateria(id: string, resource: MateriaCreateDto): Observable<Materia> {

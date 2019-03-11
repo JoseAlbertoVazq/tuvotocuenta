@@ -52,6 +52,9 @@ import {
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { DialogDeleteUsuarioComponent } from './dialogs/usuarios/dialog-delete-usuario/dialog-delete-usuario.component';
+import { DialogNewMateriaComponent } from './dialogs/materias/dialog-new-materia/dialog-new-materia.component';
+import { DialogEditMateriaComponent } from './dialogs/materias/dialog-edit-materia/dialog-edit-materia.component';
+import { DialogDeleteMateriaComponent } from './dialogs/materias/dialog-delete-materia/dialog-delete-materia.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -78,6 +81,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AccordionLinkDirective,
     AccordionDirective,
     DialogDeleteUsuarioComponent,
+    DialogNewMateriaComponent,
+    DialogEditMateriaComponent,
+    DialogDeleteMateriaComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,7 +131,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   bootstrap: [AppComponent],
   entryComponents:[
-    DialogDeleteUsuarioComponent
+    DialogDeleteUsuarioComponent,
+    DialogNewMateriaComponent
   ]
 })
 export class AppModule { }
