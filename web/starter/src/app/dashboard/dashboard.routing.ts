@@ -6,7 +6,9 @@ import {UsuariosComponent} from './usuarios/usuarios.component';
 export const DashboardRoutes: Routes = [{
   path: '',
   component: UsuariosComponent
-},{
-  path:'/materias',
+},
+{
+  path:'materias',
   component: MateriasComponent
-}];
+}
+];

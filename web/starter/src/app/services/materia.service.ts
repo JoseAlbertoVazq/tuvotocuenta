@@ -13,9 +13,10 @@ const materiaUrl = `${environment.apiUrl}/materias`;
 })
 export class MateriaService {
   token = `?access_token=${this.authService.getToken()}`;
+  master = `?access_token=${environment.masterKeyNoAcc}`;
   constructor(private http: HttpClient, private authService: AuthService) { }
   getAllMaterias(): Observable<MateriaContainer> {
-    return this.http.get<MateriaContainer>(`${materiaUrl}${this.token}`);
+    return this.http.get<MateriaContainer>(`${materiaUrl}${this.master}`);
   }
 
   createMateria(categoryCreateDto: MateriaCreateDto): Observable<Materia> {
