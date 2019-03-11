@@ -8,6 +8,7 @@ import { MateriaContainer } from '../../../interfaces/materia-container';
 import {MateriaService} from '../../../services/materia.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogNewMateriaComponent } from 'src/app/dialogs/materias/dialog-new-materia/dialog-new-materia.component';
+import { DialogDeleteMateriaComponent } from 'src/app/dialogs/materias/dialog-delete-materia/dialog-delete-materia.component';
 
 @Component({
   selector: 'app-materias',
@@ -49,5 +50,14 @@ export class MateriasComponent implements OnInit {
       this.getListMaterias('Materia created');
     });
 
+  }
+  openDialogDeleteMateria(element: Materia) {
+    const dialogoDeleteMateria = this.dialog.open(DialogDeleteMateriaComponent, {
+      data: { id: element.id }
+    });
+
+    dialogoDeleteMateria.afterClosed().subscribe(result => {
+      this.getListMaterias('Materia eliminada');
+    });
   }
 }
