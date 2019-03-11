@@ -55,6 +55,9 @@ import { DialogDeleteUsuarioComponent } from './dialogs/usuarios/dialog-delete-u
 import { DialogNewMateriaComponent } from './dialogs/materias/dialog-new-materia/dialog-new-materia.component';
 import { DialogEditMateriaComponent } from './dialogs/materias/dialog-edit-materia/dialog-edit-materia.component';
 import { DialogDeleteMateriaComponent } from './dialogs/materias/dialog-delete-materia/dialog-delete-materia.component';
+import { DialogNewPartidoComponent } from './dialogs/partidos/dialog-new-partido/dialog-new-partido.component';
+import { DialogEditPartidoComponent } from './dialogs/partidos/dialog-edit-partido/dialog-edit-partido.component';
+import { DialogDeletePartidoComponent } from './dialogs/partidos/dialog-delete-partido/dialog-delete-partido.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -84,6 +87,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DialogNewMateriaComponent,
     DialogEditMateriaComponent,
     DialogDeleteMateriaComponent,
+    DialogNewPartidoComponent,
+    DialogEditPartidoComponent,
+    DialogDeletePartidoComponent,
   ],
   imports: [
     BrowserModule,

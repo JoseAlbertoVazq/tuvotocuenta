@@ -10,7 +10,7 @@ export const create = ({ user, bodymen: { body } }, res, next) =>
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Propuesta.count(query)
     .then(count => Propuesta.find(query, select, cursor)
-      .populate('creador')
+      .populate('creador').populate('partido', 'id siglas').populate('materia', 'id nombre')
       .then((propuestas) => ({
         count,
         rows: propuestas.map((propuesta) => propuesta.view())
