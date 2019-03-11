@@ -43,6 +43,12 @@ const MENUITEMS = [
     name: 'Partidos',
     type: 'link',
     icon: 'swap_horizontal_circle'
+  },
+  {
+    state: '/dashboard/propuestas',
+    name: 'Propuestas Electorales',
+    type: 'link',
+    icon: 'build'
   }
 ];
 
