@@ -8,6 +8,10 @@
       <input matInput placeholder="siglas" [formControl]="form.controls['siglas']" required>
     </mat-form-field>
     <br />
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="URL Logo" [formControl]="form.controls['picture']" required>
+      </mat-form-field>
+      <br />
     <button mat-raised-button color="primary" [disabled]="!form.valid">ADD</button>
   </form>
 </div>

@@ -7,6 +7,10 @@ const partidoSchema = new Schema({
   siglas: {
     type: String
   },
+  picture: {
+    type: String,
+    trim: true
+  },
   propuestas: [{
     type: Schema.Types.ObjectId,
     ref: 'Propuesta',
@@ -27,6 +31,7 @@ partidoSchema.methods = {
       id: this.id,
       nombre: this.nombre,
       siglas: this.siglas,
+      picture: this.picture,
       propuestas: this.propuestas,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt

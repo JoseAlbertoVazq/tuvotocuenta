@@ -3,4 +3,5 @@ export interface Partido {
     nombre: string;
     siglas: string;
     propuestas: string[];
+    picture: string;
 }

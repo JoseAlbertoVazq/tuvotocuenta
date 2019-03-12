@@ -23,7 +23,8 @@ export class DialogNewPartidoComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       nombre: [null, Validators.compose([Validators.required])],
-      siglas: [null, Validators.compose([Validators.required])]
+      siglas: [null, Validators.compose([Validators.required])],
+      picture:[null, Validators.compose([Validators.required])]
     });
   }
   addPartido() {

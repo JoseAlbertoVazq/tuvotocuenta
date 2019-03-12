@@ -12,7 +12,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(count => Partido.find(query, select, cursor)
       .then((partidos) => ({
         count,
-        rows: partidos.map((partido) => partido.view())
+        rows: partidos.map((partido) => partido.view(true))
       }))
     )
     .then(success(res))

@@ -7,7 +7,7 @@ import { schema } from './model'
 export Partido, { schema } from './model'
 
 const router = new Router()
-const { nombre, siglas, propuestas } = schema.tree
+const { nombre, siglas, picture, propuestas } = schema.tree
 
 /**
  * @api {post} /partidos Create partido
@@ -25,7 +25,7 @@ const { nombre, siglas, propuestas } = schema.tree
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ nombre, siglas, propuestas }),
+  body({ nombre, siglas, picture, propuestas }),
   create)
 
 /**
@@ -76,7 +76,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin'] }),
-  body({ nombre, siglas, propuestas }),
+  body({ nombre, siglas, picture, propuestas }),
   update)
 
 /**

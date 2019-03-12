@@ -24,7 +24,8 @@ export class DialogEditPartidoComponent implements OnInit {
     this.getPartidos();
     this.form = this.fb.group({
       nombre: [this.data.partido.nombre, Validators.compose([Validators.required])],
-      siglas: [this.data.partido.siglas, Validators.compose([Validators.required])]
+      siglas: [this.data.partido.siglas, Validators.compose([Validators.required])],
+      picture: [this.data.partido.picture, Validators.compose([Validators.required])]
     });
   }
 

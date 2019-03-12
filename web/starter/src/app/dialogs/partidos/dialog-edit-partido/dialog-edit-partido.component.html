@@ -6,7 +6,10 @@
   <div fxLayout="column" fFlexFill>
     <mat-form-field class="example-full-width">
       <input matInput placeholder="{{data.partido.siglas}}" [formControl]="form.controls['siglas']" required>
-      
     </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="URL Logo" [formControl]="form.controls['picture']" required>
+      </mat-form-field>
+      <br />
   <button mat-raised-button color="primary" (click)="editPartido()">EDIT</button>
 </div>
