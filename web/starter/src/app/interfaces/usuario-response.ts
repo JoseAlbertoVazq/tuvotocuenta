@@ -1,11 +1,11 @@
 export interface UsuarioResponse {
-    _id: String;
-    email: String;
-    password: String;
-    name: String;
-    city: String;
-    role: String;
-    picture: String;
-    partido: String;
-    propuestas: String[];
+    _id: string;
+    email: string;
+    password: string;
+    name: string;
+    city: string;
+    role: string;
+    picture: string;
+    partido: string;
+    propuestas: string[];
 }

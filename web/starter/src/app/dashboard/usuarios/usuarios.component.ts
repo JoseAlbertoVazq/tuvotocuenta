@@ -34,7 +34,7 @@ export class UsuariosComponent implements OnInit {
         this.dataSource = new MatTableDataSource(receivedUsers.rows);
         this.dataSource.paginator = this.paginator;
       })
-      .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
+      .catch(() => this.snackBar.open('No está autorizado para obtener esta lista', 'Close', { duration: 3000 }));
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace

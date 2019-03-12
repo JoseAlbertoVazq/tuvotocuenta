@@ -23,6 +23,7 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     const loginDto: LoginDto = this.form.value
     this.authService.login(loginDto).subscribe(loginResp => {
+      console.log("Dentrooo");
       console.log(loginResp);
       this.authService.setLoginData(loginResp);
       this.router.navigate(['/dashboard']);

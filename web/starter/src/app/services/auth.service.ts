@@ -34,11 +34,12 @@ export class AuthService {
   }
 
   setLoginData(loginResponse: LoginResponse) {
+
     localStorage.setItem('token', loginResponse.token);
-    localStorage.setItem('username', loginResponse.username);
-    localStorage.setItem('email', loginResponse.email);
-    localStorage.setItem('role', loginResponse.role);
-    localStorage.setItem('city', loginResponse.city);
+    localStorage.setItem('username', loginResponse.user.name);
+    localStorage.setItem('email', loginResponse.user.email);
+    localStorage.setItem('role', loginResponse.user.role);
+    localStorage.setItem('city', loginResponse.user.city);
   }
 
   getToken(): string {

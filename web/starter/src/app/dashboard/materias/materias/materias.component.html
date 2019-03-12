@@ -20,11 +20,11 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openDialogEditMateria(element)">
+              <button mat-menu-item *ngIf="isAdmin()" (click)="openDialogEditMateria(element)" >
                 <mat-icon>border_color</mat-icon>
                 <span>Edit</span>
               </button>
-              <button mat-menu-item (click)="openDialogDeleteMateria(element)">
+              <button mat-menu-item *ngIf="isAdmin()" (click)="openDialogDeleteMateria(element)" >
                 <mat-icon>delete</mat-icon>
                 <span>Delete</span>
               </button>
@@ -32,10 +32,10 @@
             <!-- Mobile actions -->
   
             <!-- Actions in normal size-->
-            <button mat-icon-button fxHide.lt-md (click)="openDialogEditMateria(element)">
+            <button mat-icon-button fxHide.lt-md *ngIf="isAdmin()" (click)="openDialogEditMateria(element)">
               <mat-icon>border_color</mat-icon>
             </button>
-            <button mat-icon-button  fxHide.lt-md (click)="openDialogDeleteMateria(element)">
+            <button mat-icon-button  fxHide.lt-md *ngIf="isAdmin()" (click)="openDialogDeleteMateria(element)">
               <mat-icon>delete</mat-icon>
             </button>
             <!-- Actions in normal size-->
@@ -48,6 +48,6 @@
   
     <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons ></mat-paginator>
 </div>
-<button mat-fab id="addFloatingButton" (click)="openDialogNewMateria()">
+<button mat-fab id="addFloatingButton" (click)="openDialogNewMateria()" *ngIf="isAdmin()">
   <mat-icon>add</mat-icon>
 </button>
