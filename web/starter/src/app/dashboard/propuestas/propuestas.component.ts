@@ -72,4 +72,8 @@ export class PropuestasComponent implements OnInit {
       this.getListPropuesta('Propuesta eliminada');
     });
   }
+
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
 }

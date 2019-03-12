@@ -72,4 +72,7 @@ export class MateriasComponent implements OnInit {
       this.getListMaterias('Materia eliminada');
     });
   }
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
 }

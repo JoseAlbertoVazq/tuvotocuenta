@@ -74,4 +74,7 @@ export class PartidosComponent implements OnInit {
       this.getListPartidos('Partido eliminado');
     });
   }
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
 }

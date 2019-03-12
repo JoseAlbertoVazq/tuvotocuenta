@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { UsuariosResponse } from 'src/app/interfaces/usuarios-response';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { UsuarioResponse } from '../../interfaces/usuario-response';
@@ -18,7 +19,7 @@ export class UsuariosComponent implements OnInit {
   displayedColumns: string[] = ['picture', 'name', 'email', 'ciudad', 'actions'];
   dataSource;
   roles: string[];
-  constructor(private snackBar: MatSnackBar, private router: Router,
+  constructor(private snackBar: MatSnackBar, private router: Router, private authService: AuthService,
     public dialog: MatDialog, private userService: UsuarioService, private titleService: Title) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
@@ -46,6 +47,9 @@ export class UsuariosComponent implements OnInit {
     dialogDeleteUser.afterClosed().subscribe(result => {
       this.getAll();
     });
+  }
+  isAdmin() {
+    return this.authService.isAdmin();
   }
   // //dialog to create users
   // openDialogNewUser() {
