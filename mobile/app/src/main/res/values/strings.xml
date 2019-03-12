@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tu Voto Cuenta</string>
-    <string name="title_activity_dashboard">InmoApp</string>
-    <string name="title_home">Home</string>
+    <string name="title_activity_dashboard">Tu Voto Cuenta</string>
+    <string name="title_home">Inicio</string>
     <string name="title_favs">Favourites</string>
     <string name="title_mylist">My Properties</string>
     <string name="title_login">Login</string>
@@ -70,6 +70,8 @@
         <item>Zamora</item>
         <item>Zaragoza</item>
     </string-array>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <string name="title_favoritos">Favoritos</string>
+    <string name="title_mis_propuestas">Mis Propuestas</string>
+    <string name="title_mi_perfil">Mi Perfil</string>
 </resources>

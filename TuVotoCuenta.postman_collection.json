@@ -1,0 +1,647 @@
+{
+	"info": {
+		"_postman_id": "4b49af9b-7359-4fa5-b04a-d6d31a9d0305",
+		"name": "TuVotoCuenta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t\"access_token\":\"MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/auth",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"access_token\":\"MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK\",\n\t\"email\":\"admin@gmail.com\",\n\t\"password\":\"12345678\",\n\t\"name\":\"Admin\",\n\t\"role\":\"admin\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/users",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Materias",
+			"item": [
+				{
+					"name": "Crear Materias",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Salud\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/materias",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"materias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Materias",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/materias?access_token=MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"materias"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Materia",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Sanidad\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/materias/5c82543a6a025800176a6140",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"materias",
+								"5c82543a6a025800176a6140"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Materia",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/materias/5c82543a6a025800176a6140",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"materias",
+								"5c82543a6a025800176a6140"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Listar Usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/users",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/users/5c827dde8cf5f00017163f19",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c827dde8cf5f00017163f19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partidos",
+			"item": [
+				{
+					"name": "Crear partido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Unidos Podemos\",\n\t\"siglas\":\"UP\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/partidos",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"partidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar partidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/partidos",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"partidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar partido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"nombre\": \"Partido Popular\",\n            \"siglas\": \"PP\",\n            \"propuestas\": [],\n            \"picture\":\"https://ppdeferrolblog.files.wordpress.com/2018/09/logo_del_pp.png?w=512&h=512&crop=1\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/partidos/5c863b0e0fe2ec0017f8806b",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"partidos",
+								"5c863b0e0fe2ec0017f8806b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar partido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/partidos/5c863b500fe2ec0017f8806e",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"partidos",
+								"5c863b500fe2ec0017f8806e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Propuestas",
+			"item": [
+				{
+					"name": "Crear propuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"titulo\":\"Reforma del despido\",\n\t\"contenido\":\"Otorgar al trabajador la titularidad de la opción en caso de despido improcedente y recuperar la figura del despido nulo por fraude de ley\",\n\t\"materia\":\"5c8658ac0fe2ec0017f88071\",\n\t\"partido\":\"5c863b310fe2ec0017f8806e\"\n}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Propuestas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Propuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n    \"titulo\": \"Creación de 500.000 puestos de trabajo anuales\",\n    \"contenido\": \"Con el objetivo de llegar a 20 millones de personas con un puesto de trabajo en 2020\",\n\t\"materia\":\"5c8658ac0fe2ec0017f88071\",\n\t\"partido\":\"5c863b0e0fe2ec0017f8806b\"\n\t}"
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas/5c8659210fe2ec0017f88073",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas",
+								"5c8659210fe2ec0017f88073"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Propuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas/5c865b8b0fe2ec0017f88076",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas",
+								"5c865b8b0fe2ec0017f88076"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

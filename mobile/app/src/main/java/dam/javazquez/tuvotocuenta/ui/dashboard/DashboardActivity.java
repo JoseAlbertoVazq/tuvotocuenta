@@ -25,11 +25,14 @@ public class DashboardActivity extends AppCompatActivity implements LoginFragmen
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_favoritos:
+                    mTextMessage.setText(R.string.title_favoritos);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_mis_propuestas:
+                    mTextMessage.setText(R.string.title_mis_propuestas);
+                    return true;
+                case R.id.navigation_mi_perfil:
+                    mTextMessage.setText(R.string.title_mi_perfil);
                     return true;
             }
             return false;
