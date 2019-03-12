@@ -74,4 +74,9 @@
     <string name="title_favoritos">Favoritos</string>
     <string name="title_mis_propuestas">Mis Propuestas</string>
     <string name="title_mi_perfil">Mi Perfil</string>
+
+    <!-- Propuestas -->
+    <string name="titulo_propuesta">Título</string>
+    <string name="materia_propuesta">Materia</string>
+
 </resources>

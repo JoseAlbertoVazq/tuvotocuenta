@@ -8,15 +8,17 @@ public class PartidoResponse {
     private String id;
     private String nombre;
     private String siglas;
+    private String picture;
     private List<PropuestaResponse> propuestas = new ArrayList<>();
 
     public PartidoResponse(){}
 
-    public PartidoResponse(String id, String nombre, String siglas, List<PropuestaResponse> propuestas) {
+    public PartidoResponse(String id, String nombre, String siglas, List<PropuestaResponse> propuestas, String picture) {
         this.id = id;
         this.nombre = nombre;
         this.siglas = siglas;
         this.propuestas = propuestas;
+        this.picture = picture;
     }
 
     public String getId() {
@@ -49,5 +51,13 @@ public class PartidoResponse {
 
     public void setPropuestas(List<PropuestaResponse> propuestas) {
         this.propuestas = propuestas;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }
