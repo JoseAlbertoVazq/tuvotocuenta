@@ -1,6 +1,8 @@
 package dam.javazquez.tuvotocuenta.responses;
 
-public class MateriaResponse {
+import java.io.Serializable;
+
+public class MateriaResponse implements Serializable {
 
     private String id;
     private String nombre;

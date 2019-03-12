@@ -78,5 +78,7 @@
     <!-- Propuestas -->
     <string name="titulo_propuesta">Título</string>
     <string name="materia_propuesta">Materia</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="contenido_propuesta">Contenido</string>
 
 </resources>

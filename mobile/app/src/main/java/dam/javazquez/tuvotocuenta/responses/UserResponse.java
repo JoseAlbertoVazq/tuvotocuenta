@@ -1,9 +1,10 @@
 package dam.javazquez.tuvotocuenta.responses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserResponse {
+public class UserResponse implements Serializable {
 
     private String _id;
     private String name;

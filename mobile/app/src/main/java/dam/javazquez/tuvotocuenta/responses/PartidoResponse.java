@@ -1,9 +1,10 @@
 package dam.javazquez.tuvotocuenta.responses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartidoResponse {
+public class PartidoResponse implements Serializable {
 
     private String id;
     private String nombre;

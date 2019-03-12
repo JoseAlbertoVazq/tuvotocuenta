@@ -17,8 +17,7 @@ import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
 import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
 import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
 import dam.javazquez.tuvotocuenta.retrofit.services.PropuestaService;
-import dam.javazquez.tuvotocuenta.ui.propuestas.dummy.DummyContent;
-import dam.javazquez.tuvotocuenta.ui.propuestas.dummy.DummyContent.DummyItem;
+
 import dam.javazquez.tuvotocuenta.util.UtilToken;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,12 +26,7 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class PropuestaFragment extends Fragment {
 
     // TODO: Customize parameter argument names

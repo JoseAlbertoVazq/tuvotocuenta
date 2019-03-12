@@ -15,7 +15,7 @@ public interface PropuestaService {
     @GET(BASE_URL)
     Call<ResponseContainer<PropuestaResponse>> listaPropuestas();
 
-    @GET(BASE_URL+"{id}")
+    @GET(BASE_URL+"/{id}")
     Call<PropuestaResponse> getOnePropuesta(@Path("id") String id);
 
     @POST(BASE_URL)
