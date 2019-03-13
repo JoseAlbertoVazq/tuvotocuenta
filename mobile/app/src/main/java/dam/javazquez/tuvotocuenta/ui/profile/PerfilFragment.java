@@ -158,6 +158,10 @@ public class PerfilFragment extends Fragment {
             );
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             ciudades_edit.setAdapter(adapter);
+            if (userResponse.getCiudad() != null) {
+                int spinnerPosition = adapter.getPosition(userResponse.getCiudad());
+                ciudades_edit.setSelection(spinnerPosition);
+            }
 
             setDialogItems(userResponse);
             UserEditedDto edited = new UserEditedDto();
