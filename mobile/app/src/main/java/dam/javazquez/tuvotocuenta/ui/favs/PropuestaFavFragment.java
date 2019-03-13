@@ -1,21 +1,32 @@
 package dam.javazquez.tuvotocuenta.ui.favs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
+import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
+import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
+import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
 import dam.javazquez.tuvotocuenta.retrofit.services.PropuestaService;
-import dam.javazquez.tuvotocuenta.ui.favs.dummy.DummyContent;
-import dam.javazquez.tuvotocuenta.ui.favs.dummy.DummyContent.DummyItem;
+
+import dam.javazquez.tuvotocuenta.ui.login.LoginActivity;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaAdapter;
+import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
+import dam.javazquez.tuvotocuenta.util.UtilToken;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +70,12 @@ public class PropuestaFavFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        jwt = UtilToken.getToken(getContext());
+
+        if(jwt == null){
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            startActivity(i);
+        }
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -79,7 +96,27 @@ public class PropuestaFavFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyPropuestaFavRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
+
+            Call<ResponseContainer<PropuestaResponse>> call = service.listaFavs();
+            call.enqueue(new Callback<ResponseContainer<PropuestaResponse>>() {
+                @Override
+                public void onResponse(Call<ResponseContainer<PropuestaResponse>> call, Response<ResponseContainer<PropuestaResponse>> response) {
+                    if(response.isSuccessful()){
+                        propuestas = response.body().getRows();
+                        adapter = new PropuestaAdapter(FAV_CODE, context, propuestas, mListener);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseContainer<PropuestaResponse>> call, Throwable t) {
+                    Log.e("NetworkFailure", t.getMessage());
+                    Toast.makeText(getActivity(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         return view;
     }
@@ -112,8 +149,8 @@ public class PropuestaFavFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener extends PropuestaFragment.OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(PropuestaResponse item);
     }
 }

@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
+import dam.javazquez.tuvotocuenta.responses.UserResponse;
 import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
 import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
 import dam.javazquez.tuvotocuenta.retrofit.services.PropuestaService;
@@ -74,7 +76,45 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
                 }
             }
         });
+        holder.fav.setOnClickListener(v -> {
+            if (favCode == 0) {
+                service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
+                Call<UserResponse> call = service.addFav(holder.mItem.getId());
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()){
+                            Toast.makeText(contexto, "Añadido a favoritos", Toast.LENGTH_SHORT).show();
+                            holder.fav.setImageResource(R.drawable.ic_fav);
+                        } else {
+                            Toast.makeText(contexto, "Error in request", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Toast.makeText(contexto, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
+                Call<UserResponse> call = service.deleteFav(holder.mItem.getId());
+                call.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(contexto, "Eliminado de favoritos", Toast.LENGTH_LONG).show();
+                            holder.fav.setImageResource(R.drawable.ic_no_fav);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Toast.makeText(contexto, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
         holder.constraintLayout.setOnClickListener(v -> {
             service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
             Call<PropuestaResponse> callDetails = service.getOnePropuesta(holder.mItem.getId());
@@ -105,6 +145,7 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
         public final TextView titulo;
         public final TextView materia;
         public final ImageView picture;
+        public final ImageView fav;
         public PropuestaResponse mItem;
         public ConstraintLayout constraintLayout;
         public ViewHolder(View view) {
@@ -114,6 +155,7 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
             materia = view.findViewById(R.id.materia_propuesta);
             picture = view.findViewById(R.id.photo);
             constraintLayout = view.findViewById(R.id.constraint);
+            fav = view.findViewById(R.id.favPrincipal);
         }
 
     }

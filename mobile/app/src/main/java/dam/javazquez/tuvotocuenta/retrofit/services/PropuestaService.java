@@ -3,6 +3,7 @@ package dam.javazquez.tuvotocuenta.retrofit.services;
 import dam.javazquez.tuvotocuenta.dto.PropuestaCreateDto;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
 import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
+import dam.javazquez.tuvotocuenta.responses.UserResponse;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -26,10 +27,10 @@ public interface PropuestaService {
     Call<PropuestaCreateDto> createPropuesta();
 
     @POST(BASE_URL+"/fav/{id}")
-    Call<PropuestaResponse> addFav(@Path("id") String id);
+    Call<UserResponse> addFav(@Path("id") String id);
 
     @DELETE(BASE_URL+"/fav/{id}")
-    Call<PropuestaResponse> deleteFav(@Path("id") String id);
+    Call<UserResponse> deleteFav(@Path("id") String id);
 
 
 }

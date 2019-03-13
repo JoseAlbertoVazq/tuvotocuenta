@@ -12,15 +12,16 @@ import android.widget.TextView;
 
 import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
+import dam.javazquez.tuvotocuenta.ui.favs.PropuestaFavFragment;
 import dam.javazquez.tuvotocuenta.ui.login.LoginFragment;
 import dam.javazquez.tuvotocuenta.ui.login.SignUpFragment;
 import dam.javazquez.tuvotocuenta.ui.profile.PerfilFragment;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
 
-public class DashboardActivity extends AppCompatActivity implements PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
-    private Fragment propuestas, perfil;
+    private Fragment propuestas, perfil, favoritos;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -33,7 +34,8 @@ public class DashboardActivity extends AppCompatActivity implements PerfilFragme
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_favoritos:
-
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, favoritos);
+                    fragmentChanger.commit();
                     return true;
                 case R.id.navigation_mis_propuestas:
 
@@ -53,6 +55,7 @@ public class DashboardActivity extends AppCompatActivity implements PerfilFragme
         setContentView(R.layout.activity_dashboard);
         propuestas = new PropuestaFragment();
         perfil = new PerfilFragment();
+        favoritos = new PropuestaFavFragment();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
