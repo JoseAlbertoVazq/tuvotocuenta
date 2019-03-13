@@ -11,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dam.javazquez.tuvotocuenta.R;
+import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
+import dam.javazquez.tuvotocuenta.retrofit.services.PropuestaService;
 import dam.javazquez.tuvotocuenta.ui.favs.dummy.DummyContent;
 import dam.javazquez.tuvotocuenta.ui.favs.dummy.DummyContent.DummyItem;
+import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +27,12 @@ import java.util.List;
  * interface.
  */
 public class PropuestaFavFragment extends Fragment {
-
+    Context ctx = getContext();
+    List<PropuestaResponse> propuestas = new ArrayList<>();
+    String jwt;
+    PropuestaService service;
+    PropuestaAdapter adapter;
+    private static final int FAV_CODE = 1;
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
