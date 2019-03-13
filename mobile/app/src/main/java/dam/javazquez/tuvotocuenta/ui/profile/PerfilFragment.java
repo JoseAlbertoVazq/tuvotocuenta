@@ -1,8 +1,10 @@
 package dam.javazquez.tuvotocuenta.ui.profile;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import dam.javazquez.tuvotocuenta.R;
+import dam.javazquez.tuvotocuenta.dto.UserEditedDto;
 import dam.javazquez.tuvotocuenta.responses.UserResponse;
 import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
 import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
@@ -27,6 +33,8 @@ import dam.javazquez.tuvotocuenta.util.UtilToken;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +56,8 @@ public class PerfilFragment extends Fragment {
     private UserResponse userResponse;
     private String userId;
     private TextView nombre, email, ciudad, partido;
+    private EditText nombre_edit, email_edit, password_edit;
+    private Spinner ciudades_edit;
     private ImageView picture;
     private Button btn_editar, btn_logout;
     private UsuarioService service;
@@ -101,7 +111,7 @@ public class PerfilFragment extends Fragment {
         ctx = getContext();//get main activity, token and user id
         jwt = UtilToken.getToken(ctx);
         userId = UtilToken.getId(ctx);
-        View view =  inflater.inflate(R.layout.fragment_perfil, container, false);
+        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         loadItem(view);
         getUser(view);
         return view;
@@ -117,10 +127,10 @@ public class PerfilFragment extends Fragment {
         btn_logout = view.findViewById(R.id.btn_logout);
     }
 
-    public void setItems(Response<UserResponse> response, View view){
+    public void setItems(Response<UserResponse> response, View view) {
 
         userResponse = response.body();
-        if(userResponse.getPartido() == null){
+        if (userResponse.getPartido() == null) {
             partido.setText("Sin partido afín");
         } else {
             partido.setText(userResponse.getPartido().getNombre());
@@ -130,7 +140,62 @@ public class PerfilFragment extends Fragment {
         email.setText(userResponse.getEmail());
         Glide.with(view).load(userResponse.getPicture()).into(picture);
         btn_editar.setOnClickListener(v -> {
-         //abrir diálogo de edición
+            //abrir diálogo de edición
+            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("ResourceType")
+            View dialogLayout = inflater.inflate(R.layout.activity_edit, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+            builder.setView(dialogLayout);
+            nombre_edit = dialogLayout.findViewById(R.id.name_edit);
+            email_edit = dialogLayout.findViewById(R.id.email_edit);
+            password_edit = dialogLayout.findViewById(R.id.password_edit);
+            ciudades_edit = dialogLayout.findViewById(R.id.ciudades_edit);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                    ctx,
+                    R.array.provincias,
+                    android.R.layout.simple_spinner_item
+            );
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ciudades_edit.setAdapter(adapter);
+
+            setDialogItems(userResponse);
+            UserEditedDto edited = new UserEditedDto();
+
+
+
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                edited.setPicture(userResponse.getPicture());
+                edited.setEmail(email_edit.getText().toString());
+                edited.setName(nombre_edit.getText().toString());
+                edited.setCiudad(ciudades_edit.getSelectedItem().toString());
+                service = ServiceGenerator.createService(UsuarioService.class, jwt, AuthType.JWT);
+                System.out.println(userResponse.get_id());
+                Call<UserResponse> callEdit = service.editUser(userResponse.get_id(),edited);
+                callEdit.enqueue(new Callback<UserResponse>() {
+
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(ctx, "Usuario editado", Toast.LENGTH_SHORT).show();
+                            refresh();
+                        }else{
+                            Toast.makeText(ctx, "Error al editar el usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Toast.makeText(ctx, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+            builder.setNegativeButton("Cancelar", (dialog, id) -> {
+                Log.d("Back", "Going back");
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         });
         btn_logout.setOnClickListener(v -> {
             UtilToken.clearAll(ctx);
@@ -138,11 +203,16 @@ public class PerfilFragment extends Fragment {
         });
 
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void refresh(){
+        getFragmentManager().beginTransaction().detach(this).attach(this).commit();
     }
 
     @Override
@@ -161,7 +231,8 @@ public class PerfilFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    public void getUser(View view){//obtain from the api the user logged
+
+    public void getUser(View view) {//obtain from the api the user logged
         service = ServiceGenerator.createService(UsuarioService.class,
                 jwt, AuthType.JWT);
         Call<UserResponse> getOneUser = service.getMe();
@@ -186,6 +257,14 @@ public class PerfilFragment extends Fragment {
             }
         });
     }
+
+    public void setDialogItems(UserResponse user) {
+        nombre_edit.setText(user.getName());
+        email_edit.setText(user.getEmail());
+
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

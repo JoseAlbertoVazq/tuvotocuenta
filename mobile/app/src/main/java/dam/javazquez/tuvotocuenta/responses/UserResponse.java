@@ -6,7 +6,7 @@ import java.util.List;
 
 public class UserResponse implements Serializable {
 
-    private String _id;
+    private String id;
     private String name;
     private String email;
     private String password;
@@ -26,7 +26,7 @@ public class UserResponse implements Serializable {
     }
 
     public UserResponse(String _id, String name, String email, String password, String city, String role, String picture, PartidoResponse partido, List<PropuestaResponse> propuestas) {
-        this._id = _id;
+        this.id = _id;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -38,11 +38,11 @@ public class UserResponse implements Serializable {
     }
 
     public String get_id() {
-        return _id;
+        return id;
     }
 
     public void set_id(String _id) {
-        this._id = _id;
+        this.id = _id;
     }
 
     public String getName() {
