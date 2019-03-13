@@ -45,27 +45,43 @@ export const destroy = ({ user, params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-export const addFavorite = ({user, params}, res, next) =>
-  User.findByIdAndUpdate(user.id, {$addToSet: {favs: params.id}}, {new: true})
+export const addFavorite = ({ user, params }, res, next) =>
+  User.findByIdAndUpdate(user.id, { $addToSet: { favs: params.id } }, { new: true })
     .then(success(res, 200))
     .catch(next)
 
-export const delFavorite = ({user, params}, res, next) =>
-  User.findByIdAndUpdate(user.id, {$pull: {favs: params.id}}, {new: true})
+export const delFavorite = ({ user, params }, res, next) =>
+  User.findByIdAndUpdate(user.id, { $pull: { favs: params.id } }, { new: true })
     .then(success(res, 200))
     .catch(next)
 
-    export const userFavorites = ({ user, querymen: { query, select, cursor } }, res, next) => {
-      query['_id'] = { $in: user.favs }
-      Propuesta
-        .find(query, select, cursor)
-        .populate('creador')
-        .populate('partido', 'id siglas picture')
-        .populate('materia', 'id nombre')
-            .then((result) => ({
-              count: result.length,
-              rows: result
-            }))
-            .then(success(res))
-            .catch(next)
-        }
+export const userFavorites = ({ user, querymen: { query, select, cursor } }, res, next) => {
+  query['_id'] = { $in: user.favs }
+  Propuesta
+    .find(query, select, cursor)
+    .populate('creador')
+    .populate('partido', 'id siglas picture')
+    .populate('materia', 'id nombre')
+    .then((result) => ({
+      count: result.length,
+      rows: result
+    }))
+    .then(success(res))
+    .catch(next)
+}
+
+export const userPropuestas = ({ user, querymen: { query, select, cursor } }, res, next) => {
+  query['creador'] = user.id
+  Propuesta
+    .find(query, select, cursor)
+    .populate('creador', 'id, name')
+    .populate('partido', 'id siglas picture')
+    .populate('materia', 'id nombre')
+
+    .then((result) => ({
+      count: result.length,
+      rows: result
+    }))
+    .then(success(res))
+    .catch(next)
+}

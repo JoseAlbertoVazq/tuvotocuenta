@@ -685,6 +685,56 @@
 					"response": []
 				},
 				{
+					"name": "Listar mis propuestas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODIyNThlY2Y3ZTcyNGNhMzM0MWM0NiIsImlhdCI6MTU1MjQ5NjE4Mn0.1PsZeMnfnrKLbJaA3EOTSYyLUufl4rpqpGExZcH7ynU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas/propias",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas",
+								"propias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar favoritas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Listar Una Propuesta",
 					"request": {
 						"auth": {

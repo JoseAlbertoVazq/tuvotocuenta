@@ -16,12 +16,13 @@ import dam.javazquez.tuvotocuenta.ui.favs.PropuestaFavFragment;
 import dam.javazquez.tuvotocuenta.ui.login.LoginFragment;
 import dam.javazquez.tuvotocuenta.ui.login.SignUpFragment;
 import dam.javazquez.tuvotocuenta.ui.profile.PerfilFragment;
+import dam.javazquez.tuvotocuenta.ui.propias.PropiasFragment;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
 
-public class DashboardActivity extends AppCompatActivity implements PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements PropiasFragment.OnListFragmentInteractionListener, PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
-    private Fragment propuestas, perfil, favoritos;
+    private Fragment propuestas, perfil, favoritos, propias;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -38,7 +39,8 @@ public class DashboardActivity extends AppCompatActivity implements PropuestaFav
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_mis_propuestas:
-
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propias);
+                    fragmentChanger.commit();
                     return true;
                 case R.id.navigation_mi_perfil:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, perfil);
@@ -55,6 +57,7 @@ public class DashboardActivity extends AppCompatActivity implements PropuestaFav
         setContentView(R.layout.activity_dashboard);
         propuestas = new PropuestaFragment();
         perfil = new PerfilFragment();
+        propias = new PropiasFragment();
         favoritos = new PropuestaFavFragment();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
                         Toast.makeText(contexto, "Failure", Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else {
+            } else if (favCode == 1) {
                 service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
                 Call<UserResponse> call = service.deleteFav(holder.mItem.getId());
                 call.enqueue(new Callback<UserResponse>() {
@@ -113,6 +114,8 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
                         Toast.makeText(contexto, "Failure", Toast.LENGTH_SHORT).show();
                     }
                 });
+            } else {
+                Log.d("ná","de ná");
             }
         });
         holder.constraintLayout.setOnClickListener(v -> {

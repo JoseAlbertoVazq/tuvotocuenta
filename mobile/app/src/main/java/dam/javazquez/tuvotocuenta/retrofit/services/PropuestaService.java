@@ -17,19 +17,22 @@ public interface PropuestaService {
     @GET(BASE_URL)
     Call<ResponseContainer<PropuestaResponse>> listaPropuestas();
 
-    @GET(BASE_URL+"/{id}")
+    @GET(BASE_URL + "/{id}")
     Call<PropuestaResponse> getOnePropuesta(@Path("id") String id);
 
-    @GET(BASE_URL+"/fav")
+    @GET(BASE_URL + "/fav")
     Call<ResponseContainer<PropuestaResponse>> listaFavs();
+
+    @GET(BASE_URL + "/propias")
+    Call<ResponseContainer<PropuestaResponse>> listarPropias();
 
     @POST(BASE_URL)
     Call<PropuestaCreateDto> createPropuesta();
 
-    @POST(BASE_URL+"/fav/{id}")
+    @POST(BASE_URL + "/fav/{id}")
     Call<UserResponse> addFav(@Path("id") String id);
 
-    @DELETE(BASE_URL+"/fav/{id}")
+    @DELETE(BASE_URL + "/fav/{id}")
     Call<UserResponse> deleteFav(@Path("id") String id);
 
 
