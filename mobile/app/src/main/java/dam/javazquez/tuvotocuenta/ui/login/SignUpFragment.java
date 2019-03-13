@@ -146,6 +146,7 @@ public class SignUpFragment extends Fragment {
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if (response.code() == 201) {
                         // éxito
+                        System.out.println(response.body());
                         UtilToken.setToken(ctx, response.body().getToken());
                         startActivity(new Intent(ctx, DashboardActivity.class));
                     } else {

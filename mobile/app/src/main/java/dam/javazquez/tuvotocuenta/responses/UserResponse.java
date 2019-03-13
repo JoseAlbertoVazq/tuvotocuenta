@@ -10,7 +10,7 @@ public class UserResponse implements Serializable {
     private String name;
     private String email;
     private String password;
-    private String city;
+    private String ciudad;
     private String role;
     private String picture;
     private PartidoResponse partido;
@@ -22,7 +22,7 @@ public class UserResponse implements Serializable {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.city = city;
+        this.ciudad = city;
     }
 
     public UserResponse(String _id, String name, String email, String password, String city, String role, String picture, PartidoResponse partido, List<PropuestaResponse> propuestas) {
@@ -30,7 +30,7 @@ public class UserResponse implements Serializable {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.city = city;
+        this.ciudad = city;
         this.role = role;
         this.picture = picture;
         this.partido = partido;
@@ -69,12 +69,12 @@ public class UserResponse implements Serializable {
         this.password = password;
     }
 
-    public String getCity() {
-        return city;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
     public String getRole() {
