@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#babdbe</color>
     <color name="colorAccent">#000000</color>
     <color name="colorLight">#FFFFFF</color>
+
+    <color name="white_transparent">#fafafa</color>
+
+    <color name="color_input_hint">#FFF</color>
+    <color name="color_text_highlight">#fafafa</color>
+    <color name="color_text">#FFFFFF</color>
 </resources>
