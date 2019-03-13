@@ -2,14 +2,16 @@ import mongoose, { Schema } from 'mongoose'
 
 const partidoSchema = new Schema({
   nombre: {
-    type: String
+    type: String,
+    unique: true,
+    trim: true,
+    lowercase: true
   },
   siglas: {
     type: String
   },
   picture: {
-    type: String,
-    trim: true
+    type: String
   },
   propuestas: [{
     type: Schema.Types.ObjectId,
@@ -32,7 +34,6 @@ partidoSchema.methods = {
       nombre: this.nombre,
       siglas: this.siglas,
       picture: this.picture,
-      propuestas: this.propuestas,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }

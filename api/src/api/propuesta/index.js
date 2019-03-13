@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, addFavorite, delFavorite, userFavorites, destroy } from './controller'
 import { schema } from './model'
 export Propuesta, { schema } from './model'
 
@@ -46,6 +46,9 @@ router.get('/',
   query(),
   index)
 
+  router.get('/fav',
+  token({ required: true },
+  userFavorites))
 /**
  * @api {get} /propuestas/:id Retrieve propuesta
  * @apiName RetrievePropuesta
@@ -94,5 +97,13 @@ router.put('/:id',
 router.delete('/:id',
   token({ required: true }),
   destroy)
+
+router.post('/fav/:id',
+  token({required: true}),
+  addFavorite)
+
+router.delete('/fav/:id',
+  token({required: true}),
+  delFavorite)
 
 export default router

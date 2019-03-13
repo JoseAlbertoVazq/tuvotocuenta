@@ -27,7 +27,6 @@ const userSchema = new Schema({
   },
   ciudad: {
     type: String,
-    index: true,
     trim: true
   },
   role: {
@@ -81,7 +80,7 @@ userSchema.methods = {
     let fields = ['id', 'name', 'picture', 'ciudad']
 
     if (full) {
-      fields = [...fields, 'email','role', 'createdAt']
+      fields = [...fields, 'email','role', 'favs', 'createdAt']
     }
 
 

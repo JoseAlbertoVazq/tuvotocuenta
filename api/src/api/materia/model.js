@@ -2,7 +2,10 @@ import mongoose, { Schema } from 'mongoose'
 
 const materiaSchema = new Schema({
   nombre: {
-    type: String
+    type: String,
+    unique: true,
+    trim: true,
+    lowercase: true
   }
 }, {
   timestamps: true,

@@ -16,8 +16,19 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
       }))
     )
     .then(success(res))
-    .catch(next)
+    .catch((err) => {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.status(409).json({
+          valid: false,
+          param: 'nombre',
+          message: 'Materia ya registrada'
+        })
+      } else {
+        next(err)
+      }
+    })
 
+    
 export const show = ({ params }, res, next) =>
   Materia.findById(params.id)
     .then(notFound(res))

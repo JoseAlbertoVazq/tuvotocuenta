@@ -16,7 +16,7 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "admin@gmail.com",
+									"value": "sevilla@gmail.com",
 									"type": "string"
 								},
 								{
@@ -68,7 +68,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"access_token\":\"MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK\",\n\t\"email\":\"admin@gmail.com\",\n\t\"password\":\"12345678\",\n\t\"name\":\"Admin\",\n\t\"role\":\"admin\"\n}"
+							"raw": "{\n\t\"access_token\":\"MoPXY90Lg4Y9k9qIu1VGR5fhy5Odt2oK\",\n\t\"email\":\"malaga@gmail.com\",\n\t\"password\":\"12345678\",\n\t\"name\":\"Malagueño\",\n\t\"ciudad\":\"Málaga\"\n}"
 						},
 						"url": {
 							"raw": "https://ancient-fjord-80812.herokuapp.com/users",
@@ -266,7 +266,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjI1MTA4N30.4wSl7imHn08oaBMmapvbVV_LwWflVgnTAe12mZFOpI4",
 									"type": "string"
 								}
 							]
@@ -293,7 +293,84 @@
 					"response": []
 				},
 				{
+					"name": "Obtener mis datos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODIyNThlY2Y3ZTcyNGNhMzM0MWM0NiIsImlhdCI6MTU1MjQ4OTM5Nn0.Dcqhk4iUIzJq1xPpNSqoFmY2-m7B1CxLTss3UFHv-tU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/users/me",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Borrar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjI1MTA4N30.4wSl7imHn08oaBMmapvbVV_LwWflVgnTAe12mZFOpI4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/users/5c857b977b91550017cd4b7d",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"5c857b977b91550017cd4b7d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar usuario",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -305,14 +382,21 @@
 								}
 							]
 						},
-						"method": "DELETE",
-						"header": [],
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"name\": \"Asturianu\",\n            \"picture\": \"https://gravatar.com/avatar/9d4d705513f04cf5d5fd66c6080f4cae?d=identicon\",\n            \"email\": \"asturias@gmail.com\",\n            \"ciudad\":\"Asturias\"\n}"
 						},
 						"url": {
-							"raw": "https://ancient-fjord-80812.herokuapp.com/users/5c827dde8cf5f00017163f19",
+							"raw": "https://ancient-fjord-80812.herokuapp.com/users/5c88b264f639aa0017795677",
 							"protocol": "https",
 							"host": [
 								"ancient-fjord-80812",
@@ -321,7 +405,7 @@
 							],
 							"path": [
 								"users",
-								"5c827dde8cf5f00017163f19"
+								"5c88b264f639aa0017795677"
 							]
 						}
 					},
@@ -356,7 +440,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombre\":\"Unidos Podemos\",\n\t\"siglas\":\"UP\"\n}"
+							"raw": "{\n\t\"nombre\":\"VOX\",\n\t\"siglas\":\"VOX\",\n\t\"picture\":\"http://www.brandemia.org/sites/default/files/sites/default/files/vox_marca_con_claim_0.jpg\"\n}"
 						},
 						"url": {
 							"raw": "https://ancient-fjord-80812.herokuapp.com/partidos",
@@ -513,7 +597,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"titulo\":\"Reforma del despido\",\n\t\"contenido\":\"Otorgar al trabajador la titularidad de la opción en caso de despido improcedente y recuperar la figura del despido nulo por fraude de ley\",\n\t\"materia\":\"5c8658ac0fe2ec0017f88071\",\n\t\"partido\":\"5c863b310fe2ec0017f8806e\"\n}"
+							"raw": "{\n\t\"titulo\":\"Regulación estricta de la inmigración ilegal\",\n\t\"contenido\":\"Expulsión de todos los inmigrantes irregulares; la deportación de aquellos que hayan cometido delitos; y el endurecimiento de las políticas de arraigo y del 'efecto llamada'\",\n\t\"materia\":\"5c862681d7431900173b796f\",\n\t\"partido\":\"5c87b1c3b3f97100179170cc\"\n}"
 						},
 						"url": {
 							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas",
@@ -525,6 +609,42 @@
 							],
 							"path": [
 								"propuestas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir a favoritos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODIyNThlY2Y3ZTcyNGNhMzM0MWM0NiIsImlhdCI6MTU1MjQ4OTM5Nn0.Dcqhk4iUIzJq1xPpNSqoFmY2-m7B1CxLTss3UFHv-tU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas/fav/5c868a567fcc6900172552dd",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas",
+								"fav",
+								"5c868a567fcc6900172552dd"
 							]
 						}
 					},
@@ -559,6 +679,41 @@
 							],
 							"path": [
 								"propuestas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Una Propuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODI0YmQ2ZDU4Mjc0MDAxNzAzODM3ZSIsImlhdCI6MTU1MjA0Mjk2Nn0.9KuoHo38QD_25H6YBhrgzejXEywKJzQbHeteEafGmMQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas/5c868a567fcc6900172552dd",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas",
+								"5c868a567fcc6900172552dd"
 							]
 						}
 					},
@@ -636,6 +791,42 @@
 							"path": [
 								"propuestas",
 								"5c865b8b0fe2ec0017f88076"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar de favoritos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjODIyNThlY2Y3ZTcyNGNhMzM0MWM0NiIsImlhdCI6MTU1MjQ4OTM5Nn0.Dcqhk4iUIzJq1xPpNSqoFmY2-m7B1CxLTss3UFHv-tU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://ancient-fjord-80812.herokuapp.com/propuestas/fav/5c868a567fcc6900172552dd",
+							"protocol": "https",
+							"host": [
+								"ancient-fjord-80812",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"propuestas",
+								"fav",
+								"5c868a567fcc6900172552dd"
 							]
 						}
 					},
