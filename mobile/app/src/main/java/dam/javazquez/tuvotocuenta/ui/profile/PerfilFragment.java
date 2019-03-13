@@ -1,14 +1,32 @@
 package dam.javazquez.tuvotocuenta.ui.profile;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import dam.javazquez.tuvotocuenta.R;
+import dam.javazquez.tuvotocuenta.responses.UserResponse;
+import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
+import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
+import dam.javazquez.tuvotocuenta.retrofit.services.UsuarioService;
+import dam.javazquez.tuvotocuenta.ui.login.LoginActivity;
+import dam.javazquez.tuvotocuenta.util.UtilToken;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +41,16 @@ public class PerfilFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final int READ_REQUEST_CODE = 42;
+    private Uri uriSelected;
+    private String jwt;
+    private Context ctx;
+    private UserResponse userResponse;
+    private String userId;
+    private TextView nombre, email, ciudad, partido;
+    private ImageView picture;
+    private Button btn_editar, btn_logout;
+    private UsuarioService service;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -59,15 +86,58 @@ public class PerfilFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        ctx = getContext();//get main activity, token and user id
+        jwt = UtilToken.getToken(ctx);
+        userId = UtilToken.getId(ctx);
+        if (jwt == null) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_perfil, container, false);
+        ctx = getContext();//get main activity, token and user id
+        jwt = UtilToken.getToken(ctx);
+        userId = UtilToken.getId(ctx);
+        View view =  inflater.inflate(R.layout.fragment_perfil, container, false);
+        loadItem(view);
+        getUser(view);
+        return view;
     }
 
+    public void loadItem(View view) {
+        nombre = view.findViewById(R.id.perfil_nombre);
+        email = view.findViewById(R.id.perfil_email);
+        partido = view.findViewById(R.id.perfil_partido_din);
+        ciudad = view.findViewById(R.id.perfil_ciudad_din);
+        picture = view.findViewById(R.id.profile_image);
+        btn_editar = view.findViewById(R.id.btn_editar_perfil);
+        btn_logout = view.findViewById(R.id.btn_logout);
+    }
+
+    public void setItems(Response<UserResponse> response, View view){
+
+        userResponse = response.body();
+        if(userResponse.getPartido() == null){
+            partido.setText("Sin partido afín");
+        } else {
+            partido.setText(userResponse.getPartido().getNombre());
+        }
+        ciudad.setText(userResponse.getCiudad());
+        nombre.setText(userResponse.getName());
+        email.setText(userResponse.getEmail());
+        Glide.with(view).load(userResponse.getPicture()).into(picture);
+        btn_editar.setOnClickListener(v -> {
+         //abrir diálogo de edición
+        });
+        btn_logout.setOnClickListener(v -> {
+            UtilToken.clearAll(ctx);
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        });
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -91,7 +161,31 @@ public class PerfilFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+    public void getUser(View view){//obtain from the api the user logged
+        service = ServiceGenerator.createService(UsuarioService.class,
+                jwt, AuthType.JWT);
+        Call<UserResponse> getOneUser = service.getMe();
+        getOneUser.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                //Resources res = getResources();
+                String points = "";
+                if (response.isSuccessful()) {
+                    Log.d("Success", "user obtain successfully");
+                    setItems(response, view);
+                } else {
+                    Log.d("Fail", "user can't be obtain successfully");
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.d("Conexion failure", "FALLITO BUENO");
+                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

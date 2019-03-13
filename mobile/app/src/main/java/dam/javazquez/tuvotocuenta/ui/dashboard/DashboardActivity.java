@@ -14,12 +14,13 @@ import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
 import dam.javazquez.tuvotocuenta.ui.login.LoginFragment;
 import dam.javazquez.tuvotocuenta.ui.login.SignUpFragment;
+import dam.javazquez.tuvotocuenta.ui.profile.PerfilFragment;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
 
-public class DashboardActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
-    private Fragment propuestas;
+    private Fragment propuestas, perfil;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -38,7 +39,8 @@ public class DashboardActivity extends AppCompatActivity implements LoginFragmen
 
                     return true;
                 case R.id.navigation_mi_perfil:
-
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, perfil);
+                    fragmentChanger.commit();
                     return true;
             }
             return false;
@@ -50,7 +52,7 @@ public class DashboardActivity extends AppCompatActivity implements LoginFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         propuestas = new PropuestaFragment();
-
+        perfil = new PerfilFragment();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }

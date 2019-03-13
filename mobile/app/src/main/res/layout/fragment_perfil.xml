@@ -15,7 +15,6 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="32dp"
-            android:srcCompat="@drawable/ic_my_profile"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp"
             app:civ_circle_background_color="#00DF6767"
@@ -113,14 +112,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="404dp"
+            android:layout_marginTop="396dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/roundbtn"
             android:text="Editar"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.534"
+            app:layout_constraintHorizontal_bias="0.338"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="396dp"
+            android:layout_marginEnd="8dp"
+            android:text="Logout"
+            android:background="@drawable/roundbtn"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/btn_editar_perfil"
             app:layout_constraintTop_toTopOf="parent" />
 
 
