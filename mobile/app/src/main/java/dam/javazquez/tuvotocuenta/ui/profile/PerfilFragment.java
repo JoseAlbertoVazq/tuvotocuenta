@@ -81,7 +81,7 @@ public class PerfilFragment extends Fragment {
     private String userId;
     private TextView nombre, email, ciudad, partido;
     private EditText nombre_edit, email_edit, password_edit;
-    private Spinner ciudades_edit;
+    private Spinner ciudades_edit, add_partidos, add_materias;
     private ImageView picture;
     private Button btn_editar, btn_logout;
     private UsuarioService service;
