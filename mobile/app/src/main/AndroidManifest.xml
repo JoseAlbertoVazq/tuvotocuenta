@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.profile.EditActivity"></activity>
+        <activity android:name=".ui.propuestas.AddPropuesta"></activity>
+        <activity android:name=".ui.profile.EditActivity" />
         <activity
             android:name=".ui.details.DetailsActivity"
             android:label="@string/title_activity_details"

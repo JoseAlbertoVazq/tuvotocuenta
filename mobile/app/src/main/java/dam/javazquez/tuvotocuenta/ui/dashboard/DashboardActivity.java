@@ -1,13 +1,16 @@
 package dam.javazquez.tuvotocuenta.ui.dashboard;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import dam.javazquez.tuvotocuenta.R;
@@ -22,29 +25,34 @@ import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
 public class DashboardActivity extends AppCompatActivity implements PropiasFragment.OnListFragmentInteractionListener, PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
+    FloatingActionButton addPropuesta;
     private Fragment propuestas, perfil, favoritos, propias;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+        @SuppressLint("RestrictedApi")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propuestas);
                     fragmentChanger.commit();
+                    addPropuesta.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_favoritos:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, favoritos);
                     fragmentChanger.commit();
+                    addPropuesta.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_mis_propuestas:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propias);
                     fragmentChanger.commit();
+                    addPropuesta.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_mi_perfil:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, perfil);
                     fragmentChanger.commit();
+                    addPropuesta.setVisibility(View.GONE);
                     return true;
             }
             return false;
@@ -59,6 +67,11 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
         perfil = new PerfilFragment();
         propias = new PropiasFragment();
         favoritos = new PropuestaFavFragment();
+        addPropuesta = findViewById(R.id.addPropuesta);
+
+        addPropuesta.setOnClickListener(v -> {
+
+        });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
