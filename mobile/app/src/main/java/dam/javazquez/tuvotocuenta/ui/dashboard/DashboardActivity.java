@@ -1,6 +1,7 @@
 package dam.javazquez.tuvotocuenta.ui.dashboard;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,23 +10,51 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dam.javazquez.tuvotocuenta.R;
+import dam.javazquez.tuvotocuenta.dto.PropuestaCreateDto;
+import dam.javazquez.tuvotocuenta.responses.MateriaResponse;
+import dam.javazquez.tuvotocuenta.responses.PartidoResponse;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
+import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
+import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
+import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
+import dam.javazquez.tuvotocuenta.retrofit.services.MateriaService;
+import dam.javazquez.tuvotocuenta.retrofit.services.PartidoService;
+import dam.javazquez.tuvotocuenta.retrofit.services.PropuestaService;
 import dam.javazquez.tuvotocuenta.ui.favs.PropuestaFavFragment;
 import dam.javazquez.tuvotocuenta.ui.login.LoginFragment;
 import dam.javazquez.tuvotocuenta.ui.login.SignUpFragment;
 import dam.javazquez.tuvotocuenta.ui.profile.PerfilFragment;
 import dam.javazquez.tuvotocuenta.ui.propias.PropiasFragment;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
+import dam.javazquez.tuvotocuenta.util.UtilToken;
+import okhttp3.internal.Util;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity implements PropiasFragment.OnListFragmentInteractionListener, PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
     FloatingActionButton addPropuesta;
+    String jwt;
+    private EditText titulo, contenido;
+    private List<PartidoResponse> partidoResponses = new ArrayList<>();
+    private List<MateriaResponse> materiaResponses = new ArrayList<>();
+    private Spinner add_partidos, add_materias;
     private Fragment propuestas, perfil, favoritos, propias;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,18 +92,122 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        jwt = UtilToken.getToken(this);
         propuestas = new PropuestaFragment();
         perfil = new PerfilFragment();
         propias = new PropiasFragment();
         favoritos = new PropuestaFavFragment();
         addPropuesta = findViewById(R.id.addPropuesta);
 
+
         addPropuesta.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("ResourceType")
+            View dialogLayout = inflater.inflate(R.layout.activity_add_propuesta, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(dialogLayout);
+            titulo = dialogLayout.findViewById(R.id.add_titulo);
+            contenido = dialogLayout.findViewById(R.id.add_contenido_multi);
+            add_materias = dialogLayout.findViewById(R.id.add_materias);
+            add_partidos = dialogLayout.findViewById(R.id.add_partidos);
+            cargarMaterias();
+            cargarPartidos();
+
+            PropuestaCreateDto propuestaDto = new PropuestaCreateDto();
+            builder.setPositiveButton("OK", (dialog, which) -> {
+               MateriaResponse materiaElegida = (MateriaResponse) add_materias.getSelectedItem();
+               PartidoResponse partidoElegido = (PartidoResponse) add_partidos.getSelectedItem();
+               propuestaDto.setTitulo(titulo.getText().toString());
+               propuestaDto.setContenido(contenido.getText().toString());
+               propuestaDto.setMateria(materiaElegida.getId());
+               propuestaDto.setPartido(partidoElegido.getId());
+
+                PropuestaService serviceProp = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
+                Call<PropuestaCreateDto> addCall = serviceProp.createPropuesta(propuestaDto);
+                addCall.enqueue(new Callback<PropuestaCreateDto>() {
+                    @Override
+                    public void onResponse(Call<PropuestaCreateDto> call, Response<PropuestaCreateDto> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(DashboardActivity.this, "Propuesta añadida", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(getIntent());
+                            fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propias);
+                            fragmentChanger.commit();
+
+                        }
+                        else
+                            Toast.makeText(DashboardActivity.this, "Error añadiendo propuesta", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<PropuestaCreateDto> call, Throwable t) {
+                        Toast.makeText(DashboardActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+            builder.setNegativeButton(R.string.cancel, (dialog, id) -> {
+                Log.d("Back", "Going back");
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
 
         });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+    public void cargarPartidos(){
+        PartidoService serviceP = ServiceGenerator.createService(PartidoService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<PartidoResponse>> callP = serviceP.listarPartidos();
+        callP.enqueue(new Callback<ResponseContainer<PartidoResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<PartidoResponse>> call, Response<ResponseContainer<PartidoResponse>> response) {
+                if (response.isSuccessful()) {
+                    int spinnerPosition = 1;
+                    partidoResponses = response.body().getRows();
+                    ArrayAdapter<PartidoResponse> adapter = new ArrayAdapter<>(DashboardActivity.this,  android.R.layout.simple_spinner_dropdown_item, partidoResponses);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    add_partidos.setAdapter(adapter);
+                    add_partidos.setSelection(partidoResponses.size()-spinnerPosition);
+
+                } else {
+                    Toast.makeText(DashboardActivity.this, "Error in response", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<PartidoResponse>> call, Throwable t) {
+                Toast.makeText(DashboardActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void cargarMaterias(){
+        MateriaService serviceM = ServiceGenerator.createService(MateriaService.class);
+        Call<ResponseContainer<MateriaResponse>> callM = serviceM.listarMaterias();
+        callM.enqueue(new Callback<ResponseContainer<MateriaResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<MateriaResponse>> call, Response<ResponseContainer<MateriaResponse>> response) {
+                if(response.isSuccessful()){
+                    int spinnerPosition = 1;
+                    materiaResponses = response.body().getRows();
+                    ArrayAdapter<MateriaResponse> adapter = new ArrayAdapter<>(DashboardActivity.this, android.R.layout.simple_spinner_dropdown_item, materiaResponses);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    add_materias.setAdapter(adapter);
+                    add_materias.setSelection(materiaResponses.size()-spinnerPosition);
+                } else {
+                    Toast.makeText(DashboardActivity.this, "Error in response", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<MateriaResponse>> call, Throwable t) {
+                Toast.makeText(DashboardActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

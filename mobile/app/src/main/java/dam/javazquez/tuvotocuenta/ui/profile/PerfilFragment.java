@@ -35,13 +35,20 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.dto.UserEditedDto;
+import dam.javazquez.tuvotocuenta.responses.MateriaResponse;
+import dam.javazquez.tuvotocuenta.responses.PartidoResponse;
+import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
 import dam.javazquez.tuvotocuenta.responses.UserResponse;
 import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
 import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
+import dam.javazquez.tuvotocuenta.retrofit.services.MateriaService;
+import dam.javazquez.tuvotocuenta.retrofit.services.PartidoService;
 import dam.javazquez.tuvotocuenta.retrofit.services.UsuarioService;
 import dam.javazquez.tuvotocuenta.ui.login.LoginActivity;
 import dam.javazquez.tuvotocuenta.util.UtilToken;
@@ -81,7 +88,7 @@ public class PerfilFragment extends Fragment {
     private String userId;
     private TextView nombre, email, ciudad, partido;
     private EditText nombre_edit, email_edit, password_edit;
-    private Spinner ciudades_edit, add_partidos, add_materias;
+    private Spinner ciudades_edit;
     private ImageView picture;
     private Button btn_editar, btn_logout;
     private UsuarioService service;
@@ -89,6 +96,7 @@ public class PerfilFragment extends Fragment {
     private String mCurrentPhotoPath;
     private Uri filePath;
     private File fileImage;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -152,6 +160,7 @@ public class PerfilFragment extends Fragment {
         picture = view.findViewById(R.id.profile_image);
         btn_editar = view.findViewById(R.id.btn_editar_perfil);
         btn_logout = view.findViewById(R.id.btn_logout);
+
     }
 
     public void setItems(Response<UserResponse> response, View view) {
@@ -259,6 +268,8 @@ public class PerfilFragment extends Fragment {
 
         });
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

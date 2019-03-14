@@ -5,6 +5,7 @@ import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
 import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
 import dam.javazquez.tuvotocuenta.responses.UserResponse;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -27,7 +28,7 @@ public interface PropuestaService {
     Call<ResponseContainer<PropuestaResponse>> listarPropias();
 
     @POST(BASE_URL)
-    Call<PropuestaCreateDto> createPropuesta();
+    Call<PropuestaCreateDto> createPropuesta(@Body PropuestaCreateDto propuesta);
 
     @POST(BASE_URL + "/fav/{id}")
     Call<UserResponse> addFav(@Path("id") String id);

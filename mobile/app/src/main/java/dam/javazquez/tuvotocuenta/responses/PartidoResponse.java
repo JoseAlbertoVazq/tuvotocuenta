@@ -61,4 +61,9 @@ public class PartidoResponse implements Serializable {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }
