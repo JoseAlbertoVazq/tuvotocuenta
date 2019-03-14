@@ -1,5 +1,6 @@
 package dam.javazquez.tuvotocuenta.ui.propuestas;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +68,13 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
         holder.mItem = mValues.get(position);
         holder.titulo.setText(mValues.get(position).getTitulo());
         holder.materia.setText(mValues.get(position).getMateria().getNombre());
+        if (favCode == 0) {
+            holder.fav.setImageResource(R.drawable.ic_no_fav);
+        } else if (favCode == 1) {
+            holder.fav.setImageResource(R.drawable.ic_fav);
+        } else {
+            holder.fav.setImageResource(R.drawable.ic_delete);
+        }
         Glide.with(holder.mView).load(holder.mItem.getPartido().getPicture()).apply(new RequestOptions().override(409, 156)).centerInside().into(holder.picture);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +124,17 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
                     }
                 });
             } else {
-                Log.d("ná","de ná");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+                builder.setTitle(R.string.title_borrar).setMessage(R.string.message_delete);
+                builder.setPositiveButton("OK", (dialog, which) ->
+                        deletePropuesta(holder));
+                builder.setNegativeButton(R.string.cancel, (dialog, id) -> {
+                    Log.d("Back", "Going back");
+                });
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
             }
         });
         holder.constraintLayout.setOnClickListener(v -> {
@@ -136,6 +155,28 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
                 }
             });
         });
+
+    }
+
+    public void deletePropuesta(final ViewHolder holder) {
+        String id = holder.mItem.getId();
+        service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
+        Call<PropuestaResponse> call = service.deletePropuesta(id);
+        call.enqueue(new Callback<PropuestaResponse>() {
+            @Override
+            public void onResponse(Call<PropuestaResponse> call, Response<PropuestaResponse> response) {
+                if (response.isSuccessful())
+                Toast.makeText(contexto, "Propuesta eliminada", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(contexto, "Error", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<PropuestaResponse> call, Throwable t) {
+                Toast.makeText(contexto, "Failure", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -150,6 +191,7 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
         public final ImageView picture;
         public final ImageView fav;
         public PropuestaResponse mItem;
+        public final ImageButton delete;
         public ConstraintLayout constraintLayout;
         public ViewHolder(View view) {
             super(view);
@@ -159,6 +201,7 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
             picture = view.findViewById(R.id.photo);
             constraintLayout = view.findViewById(R.id.constraint);
             fav = view.findViewById(R.id.favPrincipal);
+            delete = view.findViewById(R.id.delete_propuesta);
         }
 
     }

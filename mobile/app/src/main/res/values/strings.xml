@@ -95,4 +95,7 @@
     <string name="from_camera">Cámara</string>
     <string name="choose_option">Elija desde donde quiere subir la foto:</string>
     <string name="cancel">Cancelar</string>
+
+    <string name="title_borrar">¡Atención!</string>
+    <string name="message_delete">Esta acción es irreversible, ¿desea continuar?</string>
 </resources>

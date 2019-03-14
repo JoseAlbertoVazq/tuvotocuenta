@@ -37,7 +37,7 @@ public interface PropuestaService {
     Call<UserResponse> deleteFav(@Path("id") String id);
 
     @DELETE(BASE_URL + "/{id}")
-    Call<UserResponse> deletePropuesta(@Path("id") String id);
+    Call<PropuestaResponse> deletePropuesta(@Path("id") String id);
 
 
 }
