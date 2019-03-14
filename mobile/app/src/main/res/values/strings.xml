@@ -90,4 +90,9 @@
     <string name="perfil_ciudad">Ciudad</string>
     <string name="perfil_partido">Partido</string>
 
+
+    <string name="from_gallery">Galería</string>
+    <string name="from_camera">Cámara</string>
+    <string name="choose_option">Elija desde donde quiere subir la foto:</string>
+    <string name="cancel">Cancelar</string>
 </resources>
