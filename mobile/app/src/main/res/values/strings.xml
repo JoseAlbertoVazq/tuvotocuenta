@@ -98,4 +98,5 @@
 
     <string name="title_borrar">¡Atención!</string>
     <string name="message_delete">Esta acción es irreversible, ¿desea continuar?</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,6 +52,7 @@ import dam.javazquez.tuvotocuenta.retrofit.services.MateriaService;
 import dam.javazquez.tuvotocuenta.retrofit.services.PartidoService;
 import dam.javazquez.tuvotocuenta.retrofit.services.UsuarioService;
 import dam.javazquez.tuvotocuenta.ui.login.LoginActivity;
+import dam.javazquez.tuvotocuenta.util.Geocode;
 import dam.javazquez.tuvotocuenta.util.UtilToken;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,6 +97,7 @@ public class PerfilFragment extends Fragment {
     private String path;
     private String mCurrentPhotoPath;
     private Uri filePath;
+    String result;
     private File fileImage;
 
     // TODO: Rename and change types of parameters
@@ -311,6 +314,11 @@ public class PerfilFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("Success", "user obtain successfully");
                     setItems(response, view);
+                    try {
+                        result = Geocode.getLatLong(ctx, response.body().getCiudad());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     Log.d("Fail", "user can't be obtain successfully");
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
