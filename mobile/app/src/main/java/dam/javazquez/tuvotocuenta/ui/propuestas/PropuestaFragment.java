@@ -1,5 +1,6 @@
 package dam.javazquez.tuvotocuenta.ui.propuestas;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class PropuestaFragment extends Fragment {
@@ -35,6 +38,7 @@ public class PropuestaFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private List<PropuestaResponse> propuestas = new ArrayList<>();
+    private Map<String, String> options = new HashMap<>();
     Context ctx;
     String jwt;
     PropuestaService service;
@@ -46,6 +50,11 @@ public class PropuestaFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public PropuestaFragment() {
+    }
+
+    @SuppressLint("ValidFragment")
+    public PropuestaFragment(Map<String, String> options) {
+        this.options = options;
     }
 
     // TODO: Customize parameter initialization
@@ -84,7 +93,7 @@ public class PropuestaFragment extends Fragment {
             }
             service = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
 
-            Call<ResponseContainer<PropuestaResponse>> callPropuestas = service.listaPropuestas();
+            Call<ResponseContainer<PropuestaResponse>> callPropuestas = service.listaPropuestas(options);
 
             callPropuestas.enqueue(new Callback<ResponseContainer<PropuestaResponse>>() {
                 @Override

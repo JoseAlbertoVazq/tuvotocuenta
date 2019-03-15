@@ -1,5 +1,7 @@
 package dam.javazquez.tuvotocuenta.retrofit.services;
 
+import java.util.Map;
+
 import dam.javazquez.tuvotocuenta.dto.PropuestaCreateDto;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
 import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
@@ -10,13 +12,14 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 public interface PropuestaService {
 
     String BASE_URL = "/propuestas";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<PropuestaResponse>> listaPropuestas();
+    Call<ResponseContainer<PropuestaResponse>> listaPropuestas(@QueryMap Map<String, String> options);
 
     @GET(BASE_URL + "/{id}")
     Call<PropuestaResponse> getOnePropuesta(@Path("id") String id);

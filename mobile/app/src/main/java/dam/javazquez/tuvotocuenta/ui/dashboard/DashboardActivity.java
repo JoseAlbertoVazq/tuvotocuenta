@@ -17,11 +17,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.dto.PropuestaCreateDto;
@@ -41,7 +42,6 @@ import dam.javazquez.tuvotocuenta.ui.profile.PerfilFragment;
 import dam.javazquez.tuvotocuenta.ui.propias.PropiasFragment;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
 import dam.javazquez.tuvotocuenta.util.UtilToken;
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,11 +49,12 @@ import retrofit2.Response;
 public class DashboardActivity extends AppCompatActivity implements PropiasFragment.OnListFragmentInteractionListener, PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
-    FloatingActionButton addPropuesta;
+    FloatingActionButton addPropuesta, filtro;
     String jwt;
     private EditText titulo, contenido;
     private List<PartidoResponse> partidoResponses = new ArrayList<>();
     private List<MateriaResponse> materiaResponses = new ArrayList<>();
+    private Map<String, String> options = new HashMap<>();
     private Spinner add_partidos, add_materias;
     private Fragment propuestas, perfil, favoritos, propias;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -67,21 +68,25 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propuestas);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.GONE);
+                    filtro.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_favoritos:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, favoritos);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.GONE);
+                    filtro.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_mis_propuestas:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propias);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.VISIBLE);
+                    filtro.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_mi_perfil:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, perfil);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.GONE);
+                    filtro.setVisibility(View.GONE);
                     return true;
             }
             return false;
@@ -98,7 +103,44 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
         propias = new PropiasFragment();
         favoritos = new PropuestaFavFragment();
         addPropuesta = findViewById(R.id.addPropuesta);
+        filtro = findViewById(R.id.fab_filtro);
 
+        filtro.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("ResourceType")
+            View dialogLayout = inflater.inflate(R.layout.activity_filtro, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(dialogLayout);
+            add_materias = dialogLayout.findViewById(R.id.add_materias);
+            add_partidos = dialogLayout.findViewById(R.id.add_partidos);
+            cargarMaterias();
+            cargarPartidos();
+
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                MateriaResponse materiaElegida = (MateriaResponse) add_materias.getSelectedItem();
+                PartidoResponse partidoElegido = (PartidoResponse) add_partidos.getSelectedItem();
+                if (materiaElegida.getId().equals("5c8b65fa68a6370017f1088c")) {
+                    Log.d("sin materia", "sin materia");
+                } else {
+                    options.put("materia", materiaElegida.getId());
+                }
+
+                if (partidoElegido.getId().equals("5c8b661668a6370017f1088d")) {
+                    Log.d("sin partido", "sin partido");
+                } else {
+                    options.put("partido", partidoElegido.getId());
+                }
+                propuestas = new PropuestaFragment(options);
+                fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propuestas);
+                fragmentChanger.commit();
+            });
+
+            builder.setNegativeButton(R.string.cancel, (dialog, id) -> {
+                Log.d("Back", "Going back");
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
 
         addPropuesta.setOnClickListener(v -> {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -116,12 +158,12 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
 
             PropuestaCreateDto propuestaDto = new PropuestaCreateDto();
             builder.setPositiveButton("OK", (dialog, which) -> {
-               MateriaResponse materiaElegida = (MateriaResponse) add_materias.getSelectedItem();
-               PartidoResponse partidoElegido = (PartidoResponse) add_partidos.getSelectedItem();
-               propuestaDto.setTitulo(titulo.getText().toString());
-               propuestaDto.setContenido(contenido.getText().toString());
-               propuestaDto.setMateria(materiaElegida.getId());
-               propuestaDto.setPartido(partidoElegido.getId());
+                MateriaResponse materiaElegida = (MateriaResponse) add_materias.getSelectedItem();
+                PartidoResponse partidoElegido = (PartidoResponse) add_partidos.getSelectedItem();
+                propuestaDto.setTitulo(titulo.getText().toString());
+                propuestaDto.setContenido(contenido.getText().toString());
+                propuestaDto.setMateria(materiaElegida.getId());
+                propuestaDto.setPartido(partidoElegido.getId());
 
                 PropuestaService serviceProp = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
                 Call<PropuestaCreateDto> addCall = serviceProp.createPropuesta(propuestaDto);
@@ -135,8 +177,7 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
                             fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propias);
                             fragmentChanger.commit();
 
-                        }
-                        else
+                        } else
                             Toast.makeText(DashboardActivity.this, "Error añadiendo propuesta", Toast.LENGTH_SHORT).show();
                     }
 
@@ -157,7 +198,20 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-    public void cargarPartidos(){
+
+
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
+    public void cargarPartidos() {
         PartidoService serviceP = ServiceGenerator.createService(PartidoService.class, jwt, AuthType.JWT);
         Call<ResponseContainer<PartidoResponse>> callP = serviceP.listarPartidos();
         callP.enqueue(new Callback<ResponseContainer<PartidoResponse>>() {
@@ -166,10 +220,10 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
                 if (response.isSuccessful()) {
                     int spinnerPosition = 1;
                     partidoResponses = response.body().getRows();
-                    ArrayAdapter<PartidoResponse> adapter = new ArrayAdapter<>(DashboardActivity.this,  android.R.layout.simple_spinner_dropdown_item, partidoResponses);
+                    ArrayAdapter<PartidoResponse> adapter = new ArrayAdapter<>(DashboardActivity.this, android.R.layout.simple_spinner_dropdown_item, partidoResponses);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     add_partidos.setAdapter(adapter);
-                    add_partidos.setSelection(partidoResponses.size()-spinnerPosition);
+                    add_partidos.setSelection(getIndex(add_partidos, "Sin Partido"));
 
                 } else {
                     Toast.makeText(DashboardActivity.this, "Error in response", Toast.LENGTH_SHORT).show();
@@ -183,19 +237,19 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
         });
     }
 
-    public void cargarMaterias(){
+    public void cargarMaterias() {
         MateriaService serviceM = ServiceGenerator.createService(MateriaService.class);
         Call<ResponseContainer<MateriaResponse>> callM = serviceM.listarMaterias();
         callM.enqueue(new Callback<ResponseContainer<MateriaResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<MateriaResponse>> call, Response<ResponseContainer<MateriaResponse>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     int spinnerPosition = 1;
                     materiaResponses = response.body().getRows();
                     ArrayAdapter<MateriaResponse> adapter = new ArrayAdapter<>(DashboardActivity.this, android.R.layout.simple_spinner_dropdown_item, materiaResponses);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     add_materias.setAdapter(adapter);
-                    add_materias.setSelection(materiaResponses.size()-spinnerPosition);
+                    add_materias.setSelection(getIndex(add_materias, "Sin Materia"));
                 } else {
                     Toast.makeText(DashboardActivity.this, "Error in response", Toast.LENGTH_SHORT).show();
                 }
