@@ -314,11 +314,6 @@ public class PerfilFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("Success", "user obtain successfully");
                     setItems(response, view);
-                    try {
-                        result = Geocode.getLatLong(ctx, response.body().getCiudad());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 } else {
                     Log.d("Fail", "user can't be obtain successfully");
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
