@@ -2,7 +2,7 @@ package dam.javazquez.tuvotocuenta.responses;
 
 public class AfinResponse {
 
-    private String id;
+    private String _id;
     private Long partidoCount;
 
     public AfinResponse() {
@@ -10,16 +10,16 @@ public class AfinResponse {
     }
 
     public AfinResponse(String id, Long partidoCount) {
-        this.id = id;
+        this._id = id;
         this.partidoCount = partidoCount;
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public Long getPartidoCount() {

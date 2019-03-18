@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,6 +43,7 @@ import java.util.UUID;
 
 import dam.javazquez.tuvotocuenta.R;
 import dam.javazquez.tuvotocuenta.dto.UserEditedDto;
+import dam.javazquez.tuvotocuenta.responses.AfinResponse;
 import dam.javazquez.tuvotocuenta.responses.MateriaResponse;
 import dam.javazquez.tuvotocuenta.responses.PartidoResponse;
 import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
@@ -50,6 +52,7 @@ import dam.javazquez.tuvotocuenta.retrofit.generator.AuthType;
 import dam.javazquez.tuvotocuenta.retrofit.generator.ServiceGenerator;
 import dam.javazquez.tuvotocuenta.retrofit.services.MateriaService;
 import dam.javazquez.tuvotocuenta.retrofit.services.PartidoService;
+import dam.javazquez.tuvotocuenta.retrofit.services.PropuestaService;
 import dam.javazquez.tuvotocuenta.retrofit.services.UsuarioService;
 import dam.javazquez.tuvotocuenta.ui.login.LoginActivity;
 import dam.javazquez.tuvotocuenta.util.Geocode;
@@ -94,6 +97,8 @@ public class PerfilFragment extends Fragment {
     private ImageView picture;
     private Button btn_editar, btn_logout;
     private UsuarioService service;
+    private PropuestaService serviceP;
+    private PartidoService partidoS;
     private String path;
     private String mCurrentPhotoPath;
     private Uri filePath;
@@ -152,6 +157,7 @@ public class PerfilFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         loadItem(view);
         getUser(view);
+
         return view;
     }
 
@@ -169,6 +175,7 @@ public class PerfilFragment extends Fragment {
     public void setItems(Response<UserResponse> response, View view) {
 
         userResponse = response.body();
+        getAfin(userResponse);
         if (userResponse.getPartido() == null) {
             partido.setText("Sin partido afín");
         } else {
@@ -272,7 +279,37 @@ public class PerfilFragment extends Fragment {
         });
     }
 
+    public void getAfin(UserResponse user){
+        serviceP = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<AfinResponse>> callP = serviceP.afin();
+        callP.enqueue(new Callback<ResponseContainer<AfinResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<AfinResponse>> call, Response<ResponseContainer<AfinResponse>> response) {
+                if(response.isSuccessful()){
+                    partidoS = ServiceGenerator.createService(PartidoService.class, jwt, AuthType.JWT);
+                    Call<PartidoResponse> callPartido = partidoS.getOne(response.body().getRows().get(0).getId());
+                    callPartido.enqueue(new Callback<PartidoResponse>() {
+                        @Override
+                        public void onResponse(Call<PartidoResponse> call, Response<PartidoResponse> response) {
+                            if(response.isSuccessful()){
+                                user.setPartido(response.body());
+                            }
+                        }
 
+                        @Override
+                        public void onFailure(Call<PartidoResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<AfinResponse>> call, Throwable t) {
+
+            }
+        });
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
