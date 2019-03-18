@@ -3,6 +3,7 @@ package dam.javazquez.tuvotocuenta.retrofit.services;
 import java.util.Map;
 
 import dam.javazquez.tuvotocuenta.dto.PropuestaCreateDto;
+import dam.javazquez.tuvotocuenta.responses.AfinResponse;
 import dam.javazquez.tuvotocuenta.responses.PropuestaResponse;
 import dam.javazquez.tuvotocuenta.responses.ResponseContainer;
 import dam.javazquez.tuvotocuenta.responses.UserResponse;
@@ -26,6 +27,9 @@ public interface PropuestaService {
 
     @GET(BASE_URL + "/fav")
     Call<ResponseContainer<PropuestaResponse>> listaFavs();
+
+    @GET(BASE_URL + "/afin")
+    Call<ResponseContainer<AfinResponse>> afin();
 
     @GET(BASE_URL + "/propias")
     Call<ResponseContainer<PropuestaResponse>> listarPropias();
