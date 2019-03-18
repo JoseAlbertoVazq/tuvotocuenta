@@ -4,8 +4,7 @@ const materiaSchema = new Schema({
   nombre: {
     type: String,
     unique: true,
-    trim: true,
-    lowercase: true
+    trim: true
   }
 }, {
   timestamps: true,

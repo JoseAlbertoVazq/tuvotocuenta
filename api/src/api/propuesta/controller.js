@@ -70,6 +70,28 @@ export const userFavorites = ({ user, querymen: { query, select, cursor } }, res
     .catch(next)
 }
 
+export const partidoAfin = ({ user, querymen: { query, select, cursor } }, res, next) => {
+
+  // query['_id'] = { $in: user.favs }
+
+    Propuesta
+    .aggregate([
+      {
+        '$match': {
+           $or: [{'_id': user.favs.split(',')}]
+        }
+      },
+        {'$group': {
+              '_id': '$partido',
+              'partidoCount': {'$sum': 1}
+            }},
+            {'$sort': {partidoCount: -1}}
+          ])
+          .then(success(res))
+          .catch(next)
+
+}
+
 export const userPropuestas = ({ user, querymen: { query, select, cursor } }, res, next) => {
   query['creador'] = user.id
   Propuesta

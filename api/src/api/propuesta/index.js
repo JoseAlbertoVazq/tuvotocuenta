@@ -1,13 +1,25 @@
 import { Router } from 'express'
-import { middleware as query } from 'querymen'
+import { middleware as query, Schema } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, addFavorite, delFavorite, userFavorites, destroy, userPropuestas } from './controller'
+import { create, index, show, update, addFavorite, delFavorite, userFavorites, destroy, userPropuestas, partidoAfin } from './controller'
 import { schema } from './model'
 export Propuesta, { schema } from './model'
 
 const router = new Router()
 const { titulo, contenido, materia, partido } = schema.tree
+
+const schemaPropuestas = new Schema({
+
+  materia: {
+    type: String,
+    paths: ['materia']
+  },
+  partido: {
+    type: String,
+    paths: ['partido']
+  }
+})
 
 /**
  * @api {post} /propuestas Create propuesta
@@ -43,15 +55,20 @@ router.post('/',
  */
 router.get('/',
   token({ required: true }),
-  query(),
+  query(schemaPropuestas),
   index)
 
-  router.get('/fav',
+router.get('/fav',
   token({ required: true }),
   query(),
   userFavorites)
 
-  router.get('/propias',
+router.get('/afin',
+  token({required: true}),
+  query(),
+  partidoAfin)
+
+router.get('/propias',
   token({required: true}),
   query(),
   userPropuestas)
