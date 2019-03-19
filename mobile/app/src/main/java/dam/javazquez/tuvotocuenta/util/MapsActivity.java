@@ -1,19 +1,29 @@
 package dam.javazquez.tuvotocuenta.util;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
 
 import dam.javazquez.tuvotocuenta.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    String[] provincias = new String[]{"Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz",
+            "Badalona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba",
+            "La Coruña", "Cuenca", "Gerona", "Granada", "Guadalajara", "Guipúzcoa", "Huelva", "Huesca",
+            "Islas Baleares", "Jaén", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Orense",
+            "Palencia", "Las Palmas", "Pontevedra", "La Rioja", "Salamanca", "Segovia", "Sevilla", "Soria",
+            "Tarragona", "Santa Cruz de Tenerife", "Teruel", "Azucaica", "Valencia", "Valladolid", "Vizcaya",
+            "Zamora", "Zaragoza"};
     private GoogleMap mMap;
 
     @Override
@@ -45,10 +55,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        LatLng latLng = new LatLng(40.4167, -3.70325);
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        for (String provincia : provincias) {
+            try {
+                String[] parts = Geocode.getLatLong(this, provincia).split(",");
+                String lat = parts[0];
+                String lon = parts[1];
+                LatLng loc = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
+                if (provincia.equals("Sevilla") || provincia.equals("Huelva") || provincia.equals("Jaén")) {
+                    mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.psoe)).title(provincia));
+                } else if (provincia.equals("Álava") || provincia.equals("Guipúzcoa") || provincia.equals("Vizcaya") || provincia.equals("Tarragona") || provincia.equals("Badalona")) {
+                    if (provincia.equals("Badalona")) {
+                        mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.podemos)).title("Barcelona"));
+                    }
+                    mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.podemos)).title(provincia));
+                } else if (provincia.equals("Gerona") || provincia.equals("Lérida")) {
+                    mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.erc)).title(provincia));
+                } else if (provincia.equals("Navarra")) {
+                    mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.upn)).title(provincia));
+                } else {
+                    if (provincia.equals("Azucaica")) {
+                        mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.pp)).title("Toledo"));
+                    } else {
+                        mMap.addMarker(new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.fromResource(R.drawable.pp)).title(provincia));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
     }
 }

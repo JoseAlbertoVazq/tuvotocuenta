@@ -2,6 +2,7 @@ package dam.javazquez.tuvotocuenta.ui.dashboard;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,8 @@ import dam.javazquez.tuvotocuenta.ui.login.SignUpFragment;
 import dam.javazquez.tuvotocuenta.ui.profile.PerfilFragment;
 import dam.javazquez.tuvotocuenta.ui.propias.PropiasFragment;
 import dam.javazquez.tuvotocuenta.ui.propuestas.PropuestaFragment;
+import dam.javazquez.tuvotocuenta.util.Geocode;
+import dam.javazquez.tuvotocuenta.util.MapsActivity;
 import dam.javazquez.tuvotocuenta.util.UtilToken;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +53,7 @@ import retrofit2.Response;
 public class DashboardActivity extends AppCompatActivity implements PropiasFragment.OnListFragmentInteractionListener, PropuestaFavFragment.OnListFragmentInteractionListener, PerfilFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener, PropuestaFragment.OnListFragmentInteractionListener {
 
     FragmentTransaction fragmentChanger;
-    FloatingActionButton addPropuesta, filtro;
+    FloatingActionButton addPropuesta, filtro, mapa;
     String jwt;
     private EditText titulo, contenido;
     private List<PartidoResponse> partidoResponses = new ArrayList<>();
@@ -69,24 +73,28 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.GONE);
                     filtro.setVisibility(View.VISIBLE);
+                    mapa.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_favoritos:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, favoritos);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.GONE);
                     filtro.setVisibility(View.GONE);
+                    mapa.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_mis_propuestas:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, propias);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.VISIBLE);
                     filtro.setVisibility(View.GONE);
+                    mapa.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_mi_perfil:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_dashboard, perfil);
                     fragmentChanger.commit();
                     addPropuesta.setVisibility(View.GONE);
                     filtro.setVisibility(View.GONE);
+                    mapa.setVisibility(View.GONE);;
                     return true;
             }
             return false;
@@ -103,6 +111,7 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
         propias = new PropiasFragment();
         favoritos = new PropuestaFavFragment();
         addPropuesta = findViewById(R.id.addPropuesta);
+        mapa = findViewById(R.id.mapa);
         filtro = findViewById(R.id.fab_filtro);
 
         filtro.setOnClickListener(v -> {
@@ -195,6 +204,8 @@ public class DashboardActivity extends AppCompatActivity implements PropiasFragm
 
 
         });
+
+        mapa.setOnClickListener(v -> startActivity(new Intent(DashboardActivity.this, MapsActivity.class)));
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
