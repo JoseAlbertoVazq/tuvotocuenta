@@ -175,11 +175,11 @@ public class PerfilFragment extends Fragment {
     public void setItems(Response<UserResponse> response, View view) {
 
         userResponse = response.body();
-        getAfin(userResponse);
-        if (userResponse.getPartido() == null) {
+
+        if (userResponse.getFavs().size() == 0) {
             partido.setText("Sin partido afín");
         } else {
-            partido.setText(userResponse.getPartido().getNombre());
+            getAfin(userResponse);
         }
         ciudad.setText(userResponse.getCiudad());
         nombre.setText(userResponse.getName());
@@ -292,7 +292,40 @@ public class PerfilFragment extends Fragment {
                         @Override
                         public void onResponse(Call<PartidoResponse> call, Response<PartidoResponse> response) {
                             if(response.isSuccessful()){
-                                user.setPartido(response.body());
+                                user.setPartido(response.body().getId());
+                                UserEditedDto edit = new UserEditedDto(user.getName(), user.getPicture(), user.getEmail(), user.getCiudad(), user.getPartido());
+                                service = ServiceGenerator.createService(UsuarioService.class, jwt, AuthType.JWT);
+                                Call<UserResponse> callEdit = service.editUser(user.get_id(), edit);
+                                callEdit.enqueue(new Callback<UserResponse>() {
+                                    @Override
+                                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                                       if(response.isSuccessful()) {
+                                           partidoS = ServiceGenerator.createService(PartidoService.class, jwt, AuthType.JWT);
+                                           Call<PartidoResponse> callPartido = partidoS.getOne(userResponse.getPartido());
+                                           callPartido.enqueue(new Callback<PartidoResponse>() {
+                                               @Override
+                                               public void onResponse(Call<PartidoResponse> call, Response<PartidoResponse> response) {
+                                                   partido.setText(response.body().getSiglas());
+                                                   Toast.makeText(ctx, "Datos cargados correctamente", Toast.LENGTH_SHORT).show();
+                                               }
+
+                                               @Override
+                                               public void onFailure(Call<PartidoResponse> call, Throwable t) {
+
+                                               }
+                                           });
+
+
+                                       }
+                                       else
+                                           Toast.makeText(ctx, "Error al cargar los datos", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                                        Toast.makeText(ctx, "Failure", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
 

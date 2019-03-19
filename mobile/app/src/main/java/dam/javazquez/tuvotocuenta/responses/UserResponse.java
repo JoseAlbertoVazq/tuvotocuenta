@@ -13,8 +13,9 @@ public class UserResponse implements Serializable {
     private String ciudad;
     private String role;
     private String picture;
-    private PartidoResponse partido;
+    private String partido;
     private List<PropuestaResponse> propuestas = new ArrayList<>();
+    private List<String> favs = new ArrayList<>();
 
     public UserResponse(){}
 
@@ -25,7 +26,7 @@ public class UserResponse implements Serializable {
         this.ciudad = city;
     }
 
-    public UserResponse(String _id, String name, String email, String password, String city, String role, String picture, PartidoResponse partido, List<PropuestaResponse> propuestas) {
+    public UserResponse(String _id, String name, String email, String password, String city, String role, String picture, String partido, List<PropuestaResponse> propuestas) {
         this.id = _id;
         this.name = name;
         this.email = email;
@@ -93,11 +94,11 @@ public class UserResponse implements Serializable {
         this.picture = picture;
     }
 
-    public PartidoResponse getPartido() {
+    public String getPartido() {
         return partido;
     }
 
-    public void setPartido(PartidoResponse partido) {
+    public void setPartido(String partido) {
         this.partido = partido;
     }
 
@@ -107,5 +108,13 @@ public class UserResponse implements Serializable {
 
     public void setPropuestas(List<PropuestaResponse> propuestas) {
         this.propuestas = propuestas;
+    }
+
+    public List<String> getFavs() {
+        return favs;
+    }
+
+    public void setFavs(List<String> favs) {
+        this.favs = favs;
     }
 }

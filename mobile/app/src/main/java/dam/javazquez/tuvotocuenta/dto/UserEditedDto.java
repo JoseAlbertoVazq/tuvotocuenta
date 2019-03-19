@@ -8,17 +8,24 @@ public class UserEditedDto {
     private String ciudad;
     private String email;
     private String picture;
+    private String partido;
 
 
     public UserEditedDto(){
 
     }
 
-    public UserEditedDto(String name, String ciudad, String email, String picture) {
+    public UserEditedDto(String email, String partido) {
+        this.email = email;
+        this.partido = partido;
+    }
+
+    public UserEditedDto(String name, String picture, String email, String ciudad, String partido) {
         this.name = name;
         this.ciudad = ciudad;
         this.email = email;
         this.picture = picture;
+        this.partido = partido;
     }
 
     public String getName() {
@@ -51,5 +58,13 @@ public class UserEditedDto {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public String getPartido() {
+        return partido;
+    }
+
+    public void setPartido(String partido) {
+        this.partido = partido;
     }
 }
