@@ -51,18 +51,5 @@ export class UsuariosComponent implements OnInit {
   isAdmin() {
     return this.authService.isAdmin();
   }
-  // //dialog to create users
-  // openDialogNewUser() {
-  //   const dialogNewUser = this.dialog.open(DialogCreateUserComponent, { width: '500px' });
-  //   dialogNewUser.afterClosed().subscribe(result => {
-  //     this.getAll();
-  //   });
-  // }
-  // //dialog to update users
-  // openDialogUpdateUser(userResponse: UserResponse) {
-  //   const dialogUpdateUser = this.dialog.open(DialogEditUserComponent, { width: '500px', data: { user: userResponse } });
-  //   dialogUpdateUser.afterClosed().subscribe(result => {
-  //     this.getAll();
-  //   });
-  // }
+
 }

@@ -1,6 +1,11 @@
 import { success, notFound, authorOrAdmin } from '../../services/response/'
 import { Propuesta } from '.'
 import { User } from '../user'
+import mongoose from 'mongoose'
+
+const ObjectId = mongoose.Types.ObjectId
+// const mongoose = require('mongoose')
+
 export const create = ({ user, bodymen: { body } }, res, next) =>
   Propuesta.create({ ...body, creador: user })
     .then((propuesta) => propuesta.view(true))
@@ -70,15 +75,16 @@ export const userFavorites = ({ user, querymen: { query, select, cursor } }, res
     .catch(next)
 }
 
-export const partidoAfin = ({ user, querymen: { query, select, cursor } }, res, next) => {
+export const partidoAfin = ({ user, querymen: { query } }, res, next) => {
 
-  // query['_id'] = { $in: user.favs }
+  let arrayIds = []
+  arrayIds = user.favs
 
     Propuesta
     .aggregate([
       {
         '$match': {
-           $or: [{'_id': user.favs.split(',')}]
+           '_id': {'$in': arrayIds}
         }
       },
         {'$group': {
@@ -86,11 +92,14 @@ export const partidoAfin = ({ user, querymen: { query, select, cursor } }, res, 
               'partidoCount': {'$sum': 1}
             }},
             {'$sort': {partidoCount: -1}}
-          ])
+          ]).then((result) => ({
+            count: result.length,
+            rows: result
+          }))
           .then(success(res))
           .catch(next)
-
 }
+
 
 export const userPropuestas = ({ user, querymen: { query, select, cursor } }, res, next) => {
   query['creador'] = user.id

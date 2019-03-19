@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 const propuestaSchema = new Schema({
   creador: {
-    type: Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },

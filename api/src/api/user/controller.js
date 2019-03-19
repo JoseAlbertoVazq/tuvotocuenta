@@ -4,7 +4,7 @@ import { sign } from '../../services/jwt'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.count(query)
-    .then(count => User.find(query, select, cursor)
+    .then(count => User.find(query, select, cursor).limit(100000)
       .then(users => ({
         rows: users.map((user) => user.view(true)),
         count
@@ -13,11 +13,10 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(success(res))
     .catch(next)
 
-    
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
     .then(notFound(res))
-    .then((user) => user ? user.view() : null)
+    .then((user) => user ? user.view(true) : null)
     .then(success(res))
     .catch(next)
 

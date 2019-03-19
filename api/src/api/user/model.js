@@ -80,7 +80,7 @@ userSchema.methods = {
     let fields = ['id', 'name', 'picture', 'ciudad']
 
     if (full) {
-      fields = [...fields, 'email','role', 'favs', 'createdAt']
+      fields = [...fields, 'email', 'role', 'favs', 'partido', 'createdAt']
     }
 
 
