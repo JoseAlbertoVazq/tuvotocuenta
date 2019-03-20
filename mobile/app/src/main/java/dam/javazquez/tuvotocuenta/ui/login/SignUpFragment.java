@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class SignUpFragment extends Fragment {
     EditText email, password, nombre;
     Spinner ciudades;
     Button btn_signup;
+    ImageView logo;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -100,7 +102,9 @@ public class SignUpFragment extends Fragment {
         password = view.findViewById(R.id.password_signup);
         nombre = view.findViewById(R.id.name_signup);
         btn_signup = view.findViewById(R.id.btn_do_signup);
+        logo = view.findViewById(R.id.imageView);
         ciudades = view.findViewById(R.id.ciudades_signup);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 ctx,
                 R.array.provincias,
@@ -109,7 +113,12 @@ public class SignUpFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ciudades.setAdapter(adapter);
         btn_signup.setOnClickListener(v -> doSignUp());
-
+        logo.setOnClickListener(v -> {
+            LoginFragment f = new LoginFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contenedor_login, f)
+                    .commit();
+        });
 
     }
 
@@ -129,11 +138,11 @@ public class SignUpFragment extends Fragment {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 
         if (email_txt.equals("") || password_txt.equals("")) {
-            Toast.makeText(ctx, "Fields can't be clear!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show();
         } else if (!EMAIL_REGEX.matcher(email_txt).matches()) {
-            Toast.makeText(ctx, "You need to use a correct email!", Toast.LENGTH_LONG).show();
+            Toast.makeText(ctx, "Tienes que usar un email válido", Toast.LENGTH_LONG).show();
         } else if (password_txt.length() < 6) {
-            Toast.makeText(ctx, "Password must be at least 6 characters!", Toast.LENGTH_LONG).show();
+            Toast.makeText(ctx, "La contraseña tiene que tener al menos 6 caracteres", Toast.LENGTH_LONG).show();
         } else {
 
 
@@ -151,7 +160,7 @@ public class SignUpFragment extends Fragment {
                         startActivity(new Intent(ctx, DashboardActivity.class));
                     } else {
                         // error
-                        Toast.makeText(ctx, "Error while signing up.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ctx, "Error al registrar", Toast.LENGTH_LONG).show();
                     }
                 }
 

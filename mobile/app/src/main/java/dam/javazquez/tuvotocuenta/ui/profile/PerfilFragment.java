@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.UUID;
 
 import dam.javazquez.tuvotocuenta.R;
+import dam.javazquez.tuvotocuenta.dto.PasswordDto;
 import dam.javazquez.tuvotocuenta.dto.UserEditedDto;
 import dam.javazquez.tuvotocuenta.responses.AfinResponse;
 import dam.javazquez.tuvotocuenta.responses.MateriaResponse;
@@ -95,7 +96,7 @@ public class PerfilFragment extends Fragment {
     private EditText nombre_edit, email_edit, password_edit;
     private Spinner ciudades_edit;
     private ImageView picture;
-    private Button btn_editar, btn_logout;
+    private Button btn_editar, btn_logout, btn_password;
     private UsuarioService service;
     private PropuestaService serviceP;
     private PartidoService partidoS;
@@ -167,6 +168,7 @@ public class PerfilFragment extends Fragment {
         partido = view.findViewById(R.id.perfil_partido_din);
         ciudad = view.findViewById(R.id.perfil_ciudad_din);
         picture = view.findViewById(R.id.profile_image);
+        btn_password = view.findViewById(R.id.btn_password);
         btn_editar = view.findViewById(R.id.btn_editar_perfil);
         btn_logout = view.findViewById(R.id.btn_logout);
 
@@ -185,6 +187,43 @@ public class PerfilFragment extends Fragment {
         nombre.setText(userResponse.getName());
         email.setText(userResponse.getEmail());
         Glide.with(view).load(userResponse.getPicture()).into(picture);
+
+        btn_password.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
+            @SuppressLint("ResourceType")
+            View dialogLayout = inflater.inflate(R.layout.activity_password, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+            builder.setView(dialogLayout);
+            password_edit = dialogLayout.findViewById(R.id.password_field_edit);
+            PasswordDto passwordDto = new PasswordDto();
+            builder.setPositiveButton("OK", ((dialog, which) -> {
+                passwordDto.setPassword(password_edit.getText().toString());
+                service = ServiceGenerator.createService(UsuarioService.class, jwt, AuthType.JWT);
+                Call<UserResponse> callPass = service.editPassword(userResponse.get_id(), passwordDto);
+                callPass.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(ctx, "Contraseña cambiada correctamente", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ctx, "Error al cambiar la contraseña", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+                        Toast.makeText(ctx, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }));
+            builder.setNegativeButton("Cancelar", (dialog, id) -> {
+                Log.d("Back", "Going back");
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
         btn_editar.setOnClickListener(v -> {
             //abrir diálogo de edición
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
