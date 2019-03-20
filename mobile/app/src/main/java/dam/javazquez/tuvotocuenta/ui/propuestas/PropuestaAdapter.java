@@ -75,7 +75,13 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.View
         } else {
             holder.fav.setImageResource(R.drawable.ic_delete);
         }
-        Glide.with(holder.mView).load(holder.mItem.getPartido().getPicture()).apply(new RequestOptions().override(409, 156)).centerInside().into(holder.picture);
+        Glide.with(holder.mView)
+                .load(holder.mItem.getPartido()
+                        .getPicture())
+                .apply(new RequestOptions()
+                        .override(409, 156))
+                .centerInside()
+                .into(holder.picture);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
