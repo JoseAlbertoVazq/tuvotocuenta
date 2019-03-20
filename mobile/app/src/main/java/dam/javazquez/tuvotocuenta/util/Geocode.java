@@ -13,7 +13,7 @@ public class Geocode {
         Geocoder geocoder = new Geocoder(ctx);
         double latitude = 0;
         double longitude = 0;
-        List<Address> addresses;
+        List<Address> addresses ;
         addresses = geocoder.getFromLocationName(address, 1);
         if(addresses.size() > 0) {
             latitude= addresses.get(0).getLatitude();
