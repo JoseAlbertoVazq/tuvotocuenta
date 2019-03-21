@@ -37,75 +37,49 @@
             tools:text="@string/perfil_nombre" />
 
         <TextView
-            android:id="@+id/perfil_ciudad_titulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="88dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/perfil_ciudad"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.059"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/perfil_nombre" />
-
-        <TextView
             android:id="@+id/perfil_ciudad_din"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="8dp"
             android:text="@string/perfil_ciudad"
             android:textSize="18sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.056"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/perfil_ciudad_titulo" />
+            app:layout_constraintHorizontal_bias="0.814"
+            app:layout_constraintStart_toEndOf="@+id/perfil_email"
+            app:layout_constraintTop_toBottomOf="@+id/perfil_nombre" />
 
         <TextView
             android:id="@+id/perfil_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="8dp"
             android:text="@string/email"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.099"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/perfil_nombre" />
 
         <TextView
-            android:id="@+id/perfil_partido_titulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="88dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/perfil_partido"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.888"
-            app:layout_constraintStart_toEndOf="@+id/perfil_ciudad_titulo"
-            app:layout_constraintTop_toBottomOf="@+id/perfil_nombre" />
-
-        <TextView
             android:id="@+id/perfil_partido_din"
-            android:layout_width="wrap_content"
-            android:layout_height="21dp"
+            android:layout_width="236dp"
+            android:layout_height="96dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="316dp"
             android:layout_marginEnd="8dp"
             android:text="@string/perfil_partido"
-            android:textSize="18sp"
-            android:textStyle="italic"
+            android:textAlignment="center"
+            android:textSize="35dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.825"
-            app:layout_constraintStart_toEndOf="@+id/perfil_ciudad_din"
-            app:layout_constraintTop_toBottomOf="@+id/perfil_partido_titulo" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_editar_perfil"
@@ -118,7 +92,7 @@
             android:text="Editar"
             android:textColor="@color/colorLight"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.061"
+            app:layout_constraintHorizontal_bias="0.026"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -131,7 +105,7 @@
             android:text="Logout"
             android:textColor="@color/colorLight"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.899"
+            app:layout_constraintHorizontal_bias="0.926"
             app:layout_constraintStart_toEndOf="@+id/btn_editar_perfil"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,7 +120,7 @@
             android:text="Password"
             android:textColor="@color/colorLight"
             app:layout_constraintEnd_toStartOf="@+id/btn_logout"
-            app:layout_constraintHorizontal_bias="0.457"
+            app:layout_constraintHorizontal_bias="0.526"
             app:layout_constraintStart_toEndOf="@+id/btn_editar_perfil"
             app:layout_constraintTop_toTopOf="parent" />
 
