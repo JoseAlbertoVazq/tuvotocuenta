@@ -292,7 +292,7 @@ public class PerfilFragment extends Fragment {
 
         picture.setOnClickListener(v -> {
 
-            final CharSequence[] options = {getString(R.string.from_gallery), getString(R.string.from_camera), getString(R.string.cancel)};
+            final CharSequence[] options = {getString(R.string.from_gallery), getString(R.string.cancel)};
             final AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
             builder.setTitle(getString(R.string.choose_option));
             builder.setItems(options, new DialogInterface.OnClickListener() {
