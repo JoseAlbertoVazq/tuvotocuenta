@@ -318,6 +318,12 @@ public class PerfilFragment extends Fragment {
         });
     }
 
+    /**
+     * Con este método obtenemos el partido afín al usuario en función de las propuestas electorales
+     * favoritas que ha marcado el usuario. Cada vez que cambie esta lista de favoritos, se volverá
+     * a calcular el partido afín en el momento en el que el usuario acceda a la pestaña de Mi Perfil
+     * @param user el usuario logueado, se obtiene del método getUser()
+     */
     public void getAfin(UserResponse user){
         serviceP = ServiceGenerator.createService(PropuestaService.class, jwt, AuthType.JWT);
         Call<ResponseContainer<AfinResponse>> callP = serviceP.afin();
@@ -411,6 +417,11 @@ public class PerfilFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Obtenemos los datos del usuario logueado, a través del método getMe(), del cual necesitaremos
+     * sus datos para proyectarlos en el fragment, así como su ID para hacer diversas búsquedas
+     * @param view
+     */
     public void getUser(View view) {//obtain from the api the user logged
         service = ServiceGenerator.createService(UsuarioService.class,
                 jwt, AuthType.JWT);
